@@ -6,8 +6,8 @@ export interface Subscription {
   name: string;
   provider: string;
   price: number;
-  billing_cycle: 'monthly' | 'yearly' | 'quarterly';
-  status: 'active' | 'cancelled' | 'paused' | 'trial' | 'expired';
+  billing_cycle: "monthly" | "yearly" | "quarterly";
+  status: "active" | "cancelled" | "paused" | "trial" | "expired";
   next_billing_date: string | null;
   category: string | null;
   logo_url: string | null;
@@ -23,6 +23,10 @@ export interface Subscription {
   blockchain_activated_at?: number | null;
   blockchain_last_renewed_at?: number | null;
   blockchain_canceled_at?: number | null;
+  // In Subscription interface — add after expired_at
+  paused_at: string | null;
+  resume_at: string | null;
+  pause_reason: string | null;
 }
 
 export interface SubscriptionCreateInput {
@@ -30,8 +34,8 @@ export interface SubscriptionCreateInput {
   provider?: string;
   merchant_id?: string;
   price: number;
-  billing_cycle: 'monthly' | 'yearly' | 'quarterly';
-  status?: 'active' | 'cancelled' | 'paused' | 'trial' | 'expired';
+  billing_cycle: "monthly" | "yearly" | "quarterly";
+  status?: "active" | "cancelled" | "paused" | "trial" | "expired";
   next_billing_date?: string;
   category?: string;
   logo_url?: string;
@@ -47,8 +51,8 @@ export interface SubscriptionUpdateInput {
   provider?: string;
   merchant_id?: string;
   price?: number;
-  billing_cycle?: 'monthly' | 'yearly' | 'quarterly';
-  status?: 'active' | 'cancelled' | 'paused' | 'trial' | 'expired';
+  billing_cycle?: "monthly" | "yearly" | "quarterly";
+  status?: "active" | "cancelled" | "paused" | "trial" | "expired";
   next_billing_date?: string;
   category?: string;
   logo_url?: string;
@@ -56,6 +60,10 @@ export interface SubscriptionUpdateInput {
   renewal_url?: string;
   notes?: string;
   tags?: string[];
+  // In Subscription interface — add after expired_at
+  paused_at?: string | null;
+  resume_at?: string | null;
+  pause_reason?: string | null;
 }
 
 /** Allowlist of fields a user is permitted to update.
@@ -65,8 +73,8 @@ export interface SubscriptionUpdateAllowlist {
   provider?: string;
   merchant_id?: string;
   price?: number;
-  billing_cycle?: Subscription['billing_cycle'];
-  status?: Subscription['status'];
+  billing_cycle?: Subscription["billing_cycle"];
+  status?: Subscription["status"];
   next_billing_date?: string;
   category?: string;
   logo_url?: string;
@@ -77,7 +85,7 @@ export interface SubscriptionUpdateAllowlist {
 }
 
 export interface ListSubscriptionsOptions {
-  status?: Subscription['status'];
+  status?: Subscription["status"];
   category?: string;
   limit?: number;
   offset?: number;
