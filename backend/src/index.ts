@@ -1,8 +1,20 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import * as Sentry from '@sentry/node';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
+
 // Load environment variables before importing other modules
 dotenv.config();
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  integrations: [nodeProfilingIntegration()],
+  tracesSampleRate: 0.1,
+  profilesSampleRate: 0.1,
+});
+
 
 import logger from './config/logger';
 import { requestIdMiddleware } from './middleware/requestContext';
@@ -23,6 +35,10 @@ import { expiryService } from './services/expiry-service';
 import { scheduleAutoResume } from './jobs/auto-resume';
 
 const app = express();
+
+// Add Sentry request handler before routes
+app.use(Sentry.Handlers.requestHandler());
+
 const PORT = process.env.PORT || 3001;
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || 'development-admin-key';
 
@@ -178,6 +194,8 @@ app.post('/api/admin/expiry/process', createAdminLimiter(), adminAuth, async (re
   }
 });
 
+// Add Sentry error handler after all routes
+app.use(Sentry.Handlers.errorHandler());
 
 // Start server
 const server = app.listen(PORT, async () => {

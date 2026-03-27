@@ -1,6 +1,3 @@
-The following is the integrated code for the `RiskDetectionService`, resolving the merge conflicts by including the `webhookService` and ensuring consistent string quoting:
-
-```typescript
 /**
  * Risk Detection Service
  * Core service for computing and managing subscription risk scores
@@ -344,5 +341,4 @@ export class RiskDetectionService {
   }
 }
 
-export const riskDetectionService = new RiskDetectionService();
-```
+export const riskDetectionService = new RiskDetectionService();
