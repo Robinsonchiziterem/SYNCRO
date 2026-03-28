@@ -19,6 +19,9 @@ import { monitoringService } from './services/monitoring-service';
 import { healthService } from './services/health-service';
 import { eventListener } from './services/event-listener';
 import { expiryService } from './services/expiry-service';
+import gmailRouter from '../routes/integrations/gmail'
+import outlookRouter from '../routes/integrations/outlook'
+import { authenticate } from './middleware/auth'
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -62,6 +65,8 @@ app.use('/api/simulation', simulationRoutes);
 app.use('/api/merchants', merchantRoutes);
 app.use('/api/team', teamRoutes);
 app.use('/api/audit', auditRoutes);
+app.use('/api/integrations/gmail', authenticate, gmailRouter)
+app.use('/api/integrations/outlook', authenticate, outlookRouter)
 
 // API Routes (Public/Standard)
 app.get('/api/reminders/status', (req, res) => {
