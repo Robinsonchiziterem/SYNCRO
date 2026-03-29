@@ -2,6 +2,20 @@
 
 export type BillingCycle = "monthly" | "yearly" | "quarterly";
 
+export type Difficulty = "easy" | "medium" | "hard";
+
+export interface CancellationGuide {
+  id: string;
+  serviceName: string;
+  difficulty: Difficulty;
+  directUrl: string;
+  steps: string[];
+  estimatedTime: string;
+  warningNote?: string;
+  chatSupportLink?: string;
+  phoneNumber?: string;
+}
+
 export interface Subscription {
   id: string;
   name: string;
@@ -16,6 +30,7 @@ export interface Subscription {
   history?: SubscriptionHistoryEntry[];
   createdAt: string;
   updatedAt: string;
+  cancellationGuide?: CancellationGuide; // NEW
 }
 
 export interface SubscriptionHistoryEntry {
