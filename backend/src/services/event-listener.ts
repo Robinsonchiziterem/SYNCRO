@@ -379,6 +379,14 @@ private async fetchAndProcessEvents() {
     };
   }
 
+  private async handleDuplicateRenewalRejected(event: ContractEvent): Promise<ProcessedEvent | null> {
+    const { sub_id, cycle_id } = event.value;
+
+    logger.warn('Duplicate renewal rejected by contract', { sub_id, cycle_id });
+
+    return {
+      sub_id,
+      event_type: 'duplicate_renewal_rejected',
   private async handleExecutorAssigned(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, executor } = event.value;
 
@@ -386,9 +394,6 @@ private async fetchAndProcessEvents() {
       .from('subscriptions')
       .update({ executor_address: executor })
       .eq('blockchain_sub_id', sub_id);
-
-    return {
-      sub_id,
       event_type: 'executor_assigned',
       ledger: event.ledger,
       tx_hash: event.txHash,
@@ -396,6 +401,14 @@ private async fetchAndProcessEvents() {
     };
   }
 
+  private async handleRenewalLockAcquired(event: ContractEvent): Promise<ProcessedEvent | null> {
+    const { sub_id, locked_at, lock_timeout } = event.value;
+
+    logger.info('Renewal lock acquired on-chain', { sub_id, locked_at, lock_timeout });
+
+    return {
+      sub_id,
+      event_type: 'renewal_lock_acquired',
   private async handleExecutorRemoved(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id } = event.value;
 
@@ -403,9 +416,6 @@ private async fetchAndProcessEvents() {
       .from('subscriptions')
       .update({ executor_address: null })
       .eq('blockchain_sub_id', sub_id);
-
-    return {
-      sub_id,
       event_type: 'executor_removed',
       ledger: event.ledger,
       tx_hash: event.txHash,
@@ -421,6 +431,19 @@ private async fetchAndProcessEvents() {
     return {
       sub_id,
       event_type: 'duplicate_renewal_rejected',
+  private async handleRenewalLockReleased(event: ContractEvent): Promise<ProcessedEvent | null> {
+    const { sub_id, released_at } = event.value;
+    logger.info('Renewal lock released on-chain', { sub_id, released_at });
+      event_type: 'renewal_lock_released',
+      ledger: event.ledger,
+      tx_hash: event.txHash,
+      event_data: event.value,
+    };
+  }
+  private async handleRenewalLockExpired(event: ContractEvent): Promise<ProcessedEvent | null> {
+    const { sub_id, original_locked_at, expired_at } = event.value;
+    logger.warn('Renewal lock expired on-chain', { sub_id, original_locked_at, expired_at });
+      event_type: 'renewal_lock_expired',
       ledger: event.ledger,
       tx_hash: event.txHash,
       event_data: event.value,
@@ -437,6 +460,9 @@ private async fetchAndProcessEvents() {
     }
 
     const { error } = await supabase
+    const column = LIFECYCLE_COLUMN_MAP[event_kind];
+      logger.warn('Unknown lifecycle event_kind', { sub_id, event_kind });
+    await supabase
       .from('subscriptions')
       .update({ [column]: timestamp })
       .eq('blockchain_sub_id', sub_id);
@@ -444,6 +470,7 @@ private async fetchAndProcessEvents() {
     if (error) {
       logger.error('Failed to update lifecycle timestamp', { error, sub_id, column });
     }
+    logger.info('Lifecycle timestamp updated', { sub_id, column, timestamp });
 
     return {
       sub_id,
