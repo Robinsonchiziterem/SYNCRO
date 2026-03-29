@@ -1,19 +1,7 @@
-import { Router, Response } from 'express';
-import { subscriptionService } from '../services/subscription-service';
-import { giftCardService } from '../services/gift-card-service';
-import { idempotencyService } from '../services/idempotency';
-import { authenticate, AuthenticatedRequest } from '../middleware/auth';
-import { validateSubscriptionOwnership, validateBulkSubscriptionOwnership } from '../middleware/ownership';
-import logger from '../config/logger';
-
-const router = Router();
-
-// All routes require authentication
-router.use(authenticate);
+import * as bip39 from 'bip39';
 
 /**
- * GET /api/subscriptions
- * List user's subscriptions with optional filtering
+ * Generates a standard BIP39 12-word mnemonic phrase.
  */
 router.get("/", async (req: AuthenticatedRequest, res: Response) => {
   try {
@@ -385,11 +373,12 @@ router.get("/:id/cooldown-status", validateSubscriptionOwnership, async (req: Au
 function extractWaitTime(message: string): number {
   const match = message.match(/wait (\d+) seconds/);
   return match ? parseInt(match[1], 10) : 60;
+export function generateMnemonic(): string {
+  return bip39.generateMnemonic(128);
 }
 
 /**
- * POST /api/subscriptions/:id/cancel
- * Cancel subscription with blockchain sync
+ * Validates a given mnemonic phrase (must be 12 words).
  */
 router.post("/:id/cancel", validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
   try {
@@ -452,8 +441,10 @@ router.post("/:id/cancel", validateSubscriptionOwnership, async (req: Authentica
           ? error.message
           : "Failed to cancel subscription",
     });
+export function validateMnemonic(mnemonic: string): boolean {
+  if (!mnemonic || typeof mnemonic !== 'string') {
+    return false;
   }
-});
 
 /**
  * POST /api/subscriptions/bulk
@@ -504,7 +495,10 @@ router.post("/bulk", validateBulkSubscriptionOwnership, async (req: Authenticate
       success: false,
       error: error instanceof Error ? error.message : "Failed to perform bulk operation",
     });
+  const words = mnemonic.trim().split(/\s+/);
+  if (words.length !== 12) {
+    return false;
   }
-});
 
-export default router;
+  return bip39.validateMnemonic(words.join(' '));
+}
