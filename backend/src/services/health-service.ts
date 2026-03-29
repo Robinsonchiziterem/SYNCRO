@@ -2,6 +2,7 @@ import { supabase } from '../config/database';
 import logger from '../config/logger';
 import { monitoringService } from './monitoring-service';
 import type { EventListenerHealth } from './event-listener';
+import { eventListener, EventListenerHealth } from './event-listener';
 
 export interface HealthThresholds {
   failedRenewalsPerHour: number;
@@ -51,9 +52,12 @@ export interface AdminHealthResponse {
 }
 
 const DEFAULT_THRESHOLDS: HealthThresholds = {
-  failedRenewalsPerHour: Number(process.env.HEALTH_THRESHOLD_FAILED_RENEWALS_PER_HOUR) || 10,
-  contractErrorsPerHour: Number(process.env.HEALTH_THRESHOLD_CONTRACT_ERRORS_PER_HOUR) || 5,
-  agentInactivityHours: Number(process.env.HEALTH_THRESHOLD_AGENT_INACTIVITY_HOURS) || 24,
+  failedRenewalsPerHour:
+    Number(process.env.HEALTH_THRESHOLD_FAILED_RENEWALS_PER_HOUR) || 10,
+  contractErrorsPerHour:
+    Number(process.env.HEALTH_THRESHOLD_CONTRACT_ERRORS_PER_HOUR) || 5,
+  agentInactivityHours:
+    Number(process.env.HEALTH_THRESHOLD_AGENT_INACTIVITY_HOURS) || 24,
 };
 
 export class HealthService {
@@ -101,8 +105,7 @@ export class HealthService {
       monitoringService.getAgentActivity(),
     ]);
 
-    const lastActivityAt =
-      lastActivityRes.data?.updated_at ?? null;
+    const lastActivityAt = lastActivityRes.data?.updated_at ?? null;
 
     return {
       failedRenewalsLastHour: failedDeliveriesRes.count ?? 0,
@@ -126,7 +129,10 @@ export class HealthService {
       alerts.push({
         id: 'failed_renewals',
         message: `Failed renewals in the last hour (${metrics.failedRenewalsLastHour}) exceed threshold (${this.thresholds.failedRenewalsPerHour})`,
-        severity: metrics.failedRenewalsLastHour >= this.thresholds.failedRenewalsPerHour * 2 ? 'critical' : 'warning',
+        severity:
+          metrics.failedRenewalsLastHour >= this.thresholds.failedRenewalsPerHour * 2
+            ? 'critical'
+            : 'warning',
         value: metrics.failedRenewalsLastHour,
         threshold: this.thresholds.failedRenewalsPerHour,
         triggeredAt: now,
@@ -151,7 +157,10 @@ export class HealthService {
         alerts.push({
           id: 'agent_inactivity',
           message: `No reminder processing activity for ${Math.round(inactiveHours)} hours (threshold: ${this.thresholds.agentInactivityHours}h)`,
-          severity: inactiveHours >= this.thresholds.agentInactivityHours * 2 ? 'critical' : 'warning',
+          severity:
+            inactiveHours >= this.thresholds.agentInactivityHours * 2
+              ? 'critical'
+              : 'warning',
           value: Math.round(inactiveHours),
           threshold: this.thresholds.agentInactivityHours,
           triggeredAt: now,
@@ -175,8 +184,8 @@ export class HealthService {
    * Determine overall status from alerts.
    */
   getStatus(alerts: HealthAlert[]): 'healthy' | 'degraded' | 'unhealthy' {
-    const hasCritical = alerts.some((a) => a.severity === 'critical');
-    const hasWarning = alerts.some((a) => a.severity === 'warning');
+    const hasCritical = alerts.some(a => a.severity === 'critical');
+    const hasWarning = alerts.some(a => a.severity === 'warning');
     if (hasCritical) return 'unhealthy';
     if (hasWarning) return 'degraded';
     return 'healthy';
@@ -221,7 +230,7 @@ export class HealthService {
       return [];
     }
 
-    return (data ?? []).map((row) => ({
+    return (data ?? []).map(row => ({
       recorded_at: row.recorded_at,
       failed_renewals_last_hour: row.failed_renewals_last_hour,
       successful_deliveries_last_hour: row.successful_deliveries_last_hour,
@@ -236,6 +245,13 @@ export class HealthService {
 
   /**
    * Full admin health: current metrics, alerts, status, event listener state, optional history.
+   * Full admin health: current metrics, alerts, event listener status,
+   * overall status, and optional history.
+   *
+   * Status escalation:
+   *   listener unhealthy + base healthy  → degraded
+   *   listener unhealthy + base degraded → unhealthy
+   *   base unhealthy (any listener)      → unhealthy
    */
   async getAdminHealth(includeHistory: boolean = true, eventListenerHealth?: EventListenerHealth): Promise<AdminHealthResponse> {
     const metrics = await this.getCurrentMetrics();
@@ -268,6 +284,14 @@ export class HealthService {
     }
 
     const status = this.getStatus(alerts);
+    const listenerHealth = eventListener.getHealth();
+    const baseStatus = this.getStatus(alerts);
+    const status: AdminHealthResponse['status'] =
+      listenerHealth.status === 'unhealthy' && baseStatus === 'healthy'
+        ? 'degraded'
+        : listenerHealth.status === 'unhealthy' && baseStatus === 'degraded'
+        ? 'unhealthy'
+        : baseStatus;
     const history = includeHistory ? await this.getHistory(24) : undefined;
 
     return {
@@ -277,6 +301,7 @@ export class HealthService {
       alerts,
       thresholds: this.getThresholds(),
       eventListener: elHealth,
+      eventListener: listenerHealth,
       history,
     };
   }
