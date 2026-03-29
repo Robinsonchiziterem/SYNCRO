@@ -4,6 +4,7 @@ import { merchantService } from '../services/merchant-service';
 import logger from '../config/logger';
 import { adminAuth } from '../middleware/admin';
 import { renewalRateLimiter } from '../middleware/rateLimiter';
+// import { renewalRateLimiter } from '../middleware/rate-limiter'; // Added Import
 
 // ─── Validation schemas ───────────────────────────────────────────────────────
 
@@ -238,6 +239,9 @@ router.post('/', adminAuth, async (req: Request, res: Response) => {
  *         description: Unauthorized
  */
 router.patch('/:id', adminAuth, renewalRateLimiter, async (req: Request, res: Response) => {
+// router.patch('/:id', adminAuth, renewalRateLimiter, async (req: Request, res: Response) => {
+//     try {
+//         const merchant = await merchantService.updateMerchant(req.params.id as string, req.body);
 router.patch('/:id', adminAuth, async (req: Request, res: Response) => {
     try {
         const validation = updateMerchantSchema.safeParse(req.body);
@@ -250,19 +254,19 @@ router.patch('/:id', adminAuth, async (req: Request, res: Response) => {
 
         const merchant = await merchantService.updateMerchant(req.params.id as string, validation.data);
 
-        res.json({
-            success: true,
-            data: merchant,
-        });
-    } catch (error) {
-        logger.error('Update merchant error:', error);
-        const statusCode = error instanceof Error && error.message.includes('not found') ? 404 : 500;
-        res.status(statusCode).json({
-            success: false,
-            error: error instanceof Error ? error.message : 'Failed to update merchant',
-        });
-    }
-});
+//         res.json({
+//             success: true,
+//             data: merchant,
+//         });
+//     } catch (error) {
+//         logger.error('Update merchant error:', error);
+//         const statusCode = error instanceof Error && error.message.includes('not found') ? 404 : 500;
+//         res.status(statusCode).json({
+//             success: false,
+//             error: error instanceof Error ? error.message : 'Failed to update merchant',
+//         });
+//     }
+// });
 
 /**
  * DELETE /api/merchants/:id — covered by PATCH doc block above
