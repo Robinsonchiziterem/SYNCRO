@@ -56,23 +56,30 @@ async function getInitialData() {
         }
 
         // Fetch real data from database
-        const [subscriptionsResult, emailAccountsResult] = await Promise.all([
+        const [subscriptionsResult, emailAccountsResult, paymentsResult] = await Promise.all([
             supabase
                 .from("subscriptions")
                 .select("*")
                 .eq("user_id", user.id)
                 .order("date_added", { ascending: false }),
             supabase.from("email_accounts").select("*").eq("user_id", user.id),
+            supabase
+                .from("payments")
+                .select("*")
+                .eq("user_id", user.id)
+                .order("created_at", { ascending: false }),
         ]);
 
         const subscriptions =
             subscriptionsResult.data?.map(transformSubscription) ||
             initialSubscriptions;
         const emailAccounts = emailAccountsResult.data || initialEmailAccounts;
+        const payments = paymentsResult.data || [];
 
         return {
             subscriptions,
             emailAccounts,
+            payments,
             priceChanges: [], // TODO: Fetch from database
             consolidationSuggestions: [], // TODO: Fetch from database
         };
@@ -82,6 +89,7 @@ async function getInitialData() {
         return {
             subscriptions: initialSubscriptions,
             emailAccounts: initialEmailAccounts,
+            payments: [],
             priceChanges: [],
             consolidationSuggestions: [],
         };
@@ -102,6 +110,7 @@ export default async function HomePage() {
             <AppClient
                 initialSubscriptions={initialData.subscriptions}
                 initialEmailAccounts={initialData.emailAccounts}
+                initialPayments={initialData.payments}
                 initialPriceChanges={initialData.priceChanges}
                 initialConsolidationSuggestions={
                     initialData.consolidationSuggestions
