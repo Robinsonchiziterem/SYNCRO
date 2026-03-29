@@ -27,12 +27,11 @@ export interface SubscriptionSyncResult {
 /**
  * Subscription service with blockchain sync and transaction management
  */
-
 export class SubscriptionService {
   async createSubscription(
     userId: string,
     input: SubscriptionCreateInput,
-    idempotencyKey?: string
+    idempotencyKey?: string,
   ): Promise<SubscriptionSyncResult> {
     return await DatabaseTransaction.execute(async (client) => {
       try {
@@ -43,6 +42,7 @@ export class SubscriptionService {
             name: input.name,
             provider: input.provider || input.name,
             price: input.price,
+            currency: input.currency || 'USD',
             billing_cycle: input.billing_cycle,
             status: input.status || "active",
             next_billing_date: input.next_billing_date || null,
@@ -106,9 +106,10 @@ export class SubscriptionService {
     });
   }
 
-  // Update subscription with blockchain sync
-  //Uses optimistic locking to prevent race conditions
-
+  /**
+   * Update subscription with blockchain sync.
+   * Uses optimistic locking to prevent race conditions.
+   */
   async updateSubscription(
     userId: string,
     subscriptionId: string,
@@ -117,7 +118,7 @@ export class SubscriptionService {
   ): Promise<SubscriptionSyncResult> {
     return await DatabaseTransaction.execute(async (client) => {
       try {
-        // First, verify ownership and get current version
+        // Verify ownership before updating
         const { data: existing, error: fetchError } = await client
           .from("subscriptions")
           .select("*")
@@ -128,12 +129,14 @@ export class SubscriptionService {
         if (fetchError || !existing) {
           throw new Error("Subscription not found or access denied");
         }
+
         // Explicit allowlist — prevents field injection attacks by never spreading raw input
         const {
           name,
           provider,
           merchant_id,
           price,
+          currency,
           billing_cycle,
           status,
           next_billing_date,
@@ -150,6 +153,7 @@ export class SubscriptionService {
           ...(provider !== undefined && { provider }),
           ...(merchant_id !== undefined && { merchant_id }),
           ...(price !== undefined && { price }),
+          ...(currency !== undefined && { currency }),
           ...(billing_cycle !== undefined && { billing_cycle }),
           ...(status !== undefined && { status }),
           ...(next_billing_date !== undefined && { next_billing_date }),
@@ -266,13 +270,10 @@ export class SubscriptionService {
 
           if (!blockchainResult.success) {
             syncStatus = "partial";
-            logger.warn(
-              "Blockchain sync failed for subscription cancellation",
-              {
-                subscriptionId,
-                error: blockchainResult.error,
-              },
-            );
+            logger.warn("Blockchain sync failed for subscription cancellation", {
+              subscriptionId,
+              error: blockchainResult.error,
+            });
           }
         } catch (blockchainError) {
           syncStatus = "partial";
@@ -298,7 +299,126 @@ export class SubscriptionService {
     });
   }
 
+  /**
+   * Delete subscription with blockchain sync
+   */
   //  Delete subscription with blockchain sync
+  async deleteSubscription(
+    userId: string,
+    subscriptionId: string,
+  ): Promise<SubscriptionSyncResult> {
+    return await DatabaseTransaction.execute(async (client) => {
+      try {
+        const { data: subscription, error: fetchError } = await client
+          .from("subscriptions")
+          .select("*")
+          .eq("id", subscriptionId)
+          .eq("user_id", userId)
+          .single();
+
+        if (fetchError || !subscription) {
+          throw new Error("Subscription not found or access denied");
+        }
+
+        const { error: deleteError } = await client
+          .from("subscriptions")
+          .delete()
+          .eq("id", subscriptionId)
+          .eq("user_id", userId);
+
+        if (deleteError) {
+          throw new Error(`Delete failed: ${deleteError.message}`);
+        }
+
+        let blockchainResult;
+        let syncStatus: "synced" | "partial" | "failed" = "synced";
+
+        try {
+          blockchainResult = await blockchainService.syncSubscription(
+            userId,
+            subscriptionId,
+            "delete",
+            subscription,
+          );
+
+          if (!blockchainResult.success) {
+            syncStatus = "partial";
+            logger.warn("Blockchain sync failed for subscription deletion", {
+              subscriptionId,
+              error: blockchainResult.error,
+            });
+          }
+        } catch (blockchainError) {
+          syncStatus = "partial";
+          logger.error("Blockchain sync error (non-fatal):", blockchainError);
+          blockchainResult = {
+            success: false,
+            error:
+              blockchainError instanceof Error
+                ? blockchainError.message
+                : String(blockchainError),
+          };
+        }
+      // Verify exists and ownership
+      const { data: existing, error: fetchError } = await client
+        .from("subscriptions")
+        .select("*")
+        .eq("id", subscriptionId)
+        .eq("user_id", userId)
+        .single();
+      if (fetchError || !existing) {
+        throw new Error("Subscription not found or access denied");
+      }
+
+      // Delete the subscription
+      const { data: deleted, error: delError } = await client
+        .from("subscriptions")
+        .delete()
+        .eq("id", subscriptionId)
+        .eq("user_id", userId)
+        .select()
+        .single();
+
+      if (delError) {
+        throw new Error(`Delete failed: ${delError.message}`);
+      }
+
+      // Attempt blockchain sync
+      let blockchainResult: BlockchainSyncResult | undefined;
+      let syncStatus: "synced" | "partial" | "failed" = "synced";
+      try {
+        blockchainResult = await blockchainService.syncSubscription(
+          userId,
+          subscriptionId,
+          "delete",
+          existing,
+        );
+        if (!blockchainResult.success) {
+          syncStatus = "partial";
+          logger.warn("Blockchain sync failed for subscription delete", {
+            subscriptionId,
+            error: blockchainResult.error,
+          });
+        }
+      } catch (blockchainError) {
+        syncStatus = "partial";
+        logger.error("Blockchain sync error (non-fatal):", blockchainError);
+        blockchainResult = {
+          success: false,
+          error:
+            blockchainError instanceof Error
+              ? blockchainError.message
+              : String(blockchainError),
+        };
+      }
+
+      return {
+        subscription: deleted as Subscription,
+        blockchainResult,
+        syncStatus,
+      };
+    });
+  }
 
   async pauseSubscription(
   userId: string,
@@ -463,8 +583,21 @@ async resumeSubscription(
   });
 }
 
-  // Get subscription by ID (with ownership check)
+        return {
+          subscription,
+          blockchainResult,
+          syncStatus,
+        };
+      } catch (error) {
+        logger.error("Subscription deletion failed:", error);
+        throw error;
+      }
+    });
+  }
 
+  /**
+   * Get subscription by ID (with ownership check)
+   */
   async getSubscription(userId: string, subscriptionId: string): Promise<Subscription> {
     const { data: subscription, error } = await supabase
       .from("subscriptions")
@@ -480,7 +613,9 @@ async resumeSubscription(
     return subscription;
   }
 
-  // List user's subscriptions
+  /**
+   * List user's subscriptions with optional filtering
+   */
   async listSubscriptions(
     userId: string,
     options: ListSubscriptionsOptions = {},
@@ -523,8 +658,8 @@ async resumeSubscription(
   }
 
   /**
-   * Check if a renewal can be attempted based on cooldown period
-   * Returns cooldown status without enforcing it
+   * Check if a renewal can be attempted based on cooldown period.
+   * Returns cooldown status without enforcing it.
    */
   async checkRenewalCooldown(
     subscriptionId: string,
@@ -535,9 +670,7 @@ async resumeSubscription(
     message: string;
   }> {
     try {
-      const cooldownStatus = await renewalCooldownService.checkCooldown(
-        subscriptionId,
-      );
+      const cooldownStatus = await renewalCooldownService.checkCooldown(subscriptionId);
 
       return {
         canRetry: cooldownStatus.canRetry,
@@ -554,8 +687,8 @@ async resumeSubscription(
   }
 
   /**
-   * Retry blockchain sync for a subscription with cooldown enforcement
-   * Enforces minimum time gap between renewal attempts to prevent network spam
+   * Retry blockchain sync for a subscription with cooldown enforcement.
+   * Enforces minimum time gap between renewal attempts to prevent network spam.
    */
   async retryBlockchainSync(
     userId: string,
@@ -565,9 +698,7 @@ async resumeSubscription(
     try {
       // Check cooldown unless forcing bypass (admin operations)
       if (!forceBypass) {
-        const cooldownStatus = await renewalCooldownService.checkCooldown(
-          subscriptionId,
-        );
+        const cooldownStatus = await renewalCooldownService.checkCooldown(subscriptionId);
 
         if (cooldownStatus.isOnCooldown) {
           const error = `Cooldown period active. Please wait ${cooldownStatus.timeRemainingSeconds} seconds before retrying.`;
