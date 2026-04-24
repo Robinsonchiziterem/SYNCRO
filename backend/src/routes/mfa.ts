@@ -37,14 +37,14 @@ router.post('/2fa/recovery-codes/verify', createMfaLimiter(), async (req: Authen
   const { code } = validateRequest(z.object({ code: z.string().min(1) }), req.body);
 
   if (totpRateLimiter.isLocked(userId)) {
-    throw new RateLimitError('Too many failed attempts. Please try again later.');
+    throw new RateLimitError('Too many failed attempts. Please try again later.', totpRateLimiter.getRetryAfter(userId));
   }
 
   const valid = await recoveryCodeService.verify(userId, code);
   if (!valid) {
     totpRateLimiter.recordFailure(userId);
     if (totpRateLimiter.isLocked(userId)) {
-      throw new RateLimitError('Too many failed attempts. Please try again later.');
+      throw new RateLimitError('Too many failed attempts. Please try again later.', totpRateLimiter.getRetryAfter(userId));
     }
     throw new UnauthorizedError('Invalid or already-used recovery code');
   }

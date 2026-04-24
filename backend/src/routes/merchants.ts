@@ -75,7 +75,7 @@ router.get('/', async (req: Request, res: Response) => {
  * Get a single merchant by ID
  */
 router.get('/:id', async (req: Request, res: Response) => {
-  const merchant = await merchantService.getMerchant(req.params.id);
+  const merchant = await merchantService.getMerchant(req.params.id as string);
   res.json({
     success: true,
     data: merchant,
@@ -102,7 +102,7 @@ router.post('/', adminAuth, async (req: Request, res: Response) => {
  */
 router.patch('/:id', adminAuth, renewalRateLimiter, async (req: Request, res: Response) => {
   const validatedData = validateRequest(updateMerchantSchema, req.body);
-  const merchant = await merchantService.updateMerchant(req.params.id, validatedData);
+  const merchant = await merchantService.updateMerchant(req.params.id as string, validatedData);
 
   res.json({
     success: true,
@@ -115,7 +115,7 @@ router.patch('/:id', adminAuth, renewalRateLimiter, async (req: Request, res: Re
  * Delete a merchant (admin only)
  */
 router.delete('/:id', adminAuth, async (req: Request, res: Response) => {
-  await merchantService.deleteMerchant(req.params.id);
+  await merchantService.deleteMerchant(req.params.id as string);
 
   res.json({
     success: true,

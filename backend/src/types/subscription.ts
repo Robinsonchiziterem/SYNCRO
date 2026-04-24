@@ -7,7 +7,7 @@ export interface Subscription {
   provider: string;
   price: number;
   currency: string;
-  billing_cycle: "monthly" | "yearly" | "quarterly";
+  billing_cycle: "monthly" | "yearly" | "quarterly" | "weekly";
   status: "active" | "cancelled" | "paused" | "trial" | "expired";
   next_billing_date: string | null;
   category: string | null;
@@ -36,7 +36,7 @@ export interface SubscriptionCreateInput {
   merchant_id?: string;
   price: number;
   currency?: string;
-  billing_cycle: "monthly" | "yearly" | "quarterly";
+  billing_cycle: "monthly" | "yearly" | "quarterly" | "weekly";
   status?: "active" | "cancelled" | "paused" | "trial" | "expired";
   next_billing_date?: string;
   category?: string;
@@ -55,7 +55,7 @@ export interface SubscriptionUpdateInput {
   merchant_id?: string;
   price?: number;
   currency?: string;
-  billing_cycle?: "monthly" | "yearly" | "quarterly";
+  billing_cycle?: "monthly" | "yearly" | "quarterly" | "weekly";
   status?: "active" | "cancelled" | "paused" | "trial" | "expired";
   next_billing_date?: string;
   category?: string;

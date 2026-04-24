@@ -49,7 +49,9 @@ router.post('/test', async (req: AuthenticatedRequest, res: Response) => {
   );
 
   if (recentTests.length > 0) {
-    throw new RateLimitError('A test digest was already sent in the last hour.');
+    const nextTestAt = new Date(recentTests[0].sentAt).getTime() + 60 * 60 * 1000;
+    const retryAfter = Math.ceil((nextTestAt - Date.now()) / 1000);
+    throw new RateLimitError('A test digest was already sent in the last hour.', Math.max(0, retryAfter));
   }
 
   const outcome = await digestService.sendDigestForUser(userId, 'test');

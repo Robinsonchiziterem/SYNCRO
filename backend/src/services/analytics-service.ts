@@ -87,7 +87,7 @@ export class AnalyticsService {
       case 'monthly':
         return price;
       case 'weekly':
-        return price * (365 / 7 / 12); // Average weeks in a month
+        return (price * 52) / 12; // More standard than 365/7/12
       case 'quarterly':
         return price / 3;
       case 'semiannual':

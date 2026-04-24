@@ -3,7 +3,7 @@ import { supabase } from '../config/database';
 import { blockchainService } from './blockchain-service';
 import { DatabaseTransaction } from '../utils/transaction';
 import { webhookService } from './webhook-service';
-import { addMonths, addQuarters, addYears } from 'date-fns';
+import { addMonths, addQuarters, addYears, addWeeks } from 'date-fns';
 
 interface RenewalRequest {
   subscriptionId: string;
@@ -185,13 +185,13 @@ export class RenewalExecutor {
   private async updateSubscription(
     client: any,
     subscriptionId: string,
-    billingCycle: 'monthly' | 'quarterly' | 'yearly',
+    billingCycle: string,
     transactionHash?: string
   ): Promise<void> {
     const now = new Date();
     let nextBilling: Date;
 
-    switch (billingCycle) {
+    switch (billingCycle.toLowerCase()) {
       case 'monthly':
         nextBilling = addMonths(now, 1);
         break;
@@ -199,10 +199,14 @@ export class RenewalExecutor {
         nextBilling = addQuarters(now, 1);
         break;
       case 'yearly':
+      case 'annual':
         nextBilling = addYears(now, 1);
         break;
+      case 'weekly':
+        nextBilling = addWeeks(now, 1);
+        break;
       default:
-        nextBilling = addMonths(now, 1);
+        throw new Error(`Unknown billing cycle: ${billingCycle}`);
     }
 
     await client

@@ -2,7 +2,6 @@ import { supabase } from '../config/database';
 import logger from '../config/logger';
 import { monitoringService } from './monitoring-service';
 import { eventListener, EventListenerHealth } from './event-listener';
-import type { EventListenerHealth } from './event-listener';
 
 export interface HealthThresholds {
   failedRenewalsPerHour: number;
@@ -290,16 +289,15 @@ export class HealthService {
         triggeredAt: new Date().toISOString(),
       });
     }
-    const status = this.getStatus(alerts);
+    const finalStatus = this.getStatus(alerts);
     const history = includeHistory ? await this.getHistory(24) : undefined;
 
     return {
-      status,
+      status: finalStatus,
       timestamp: new Date().toISOString(),
       metrics,
       alerts,
       thresholds: this.getThresholds(),
-      eventListener: listenerHealth,
       eventListener: elHealth,
       history,
     };

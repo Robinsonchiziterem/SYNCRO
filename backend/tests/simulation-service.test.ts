@@ -9,19 +9,19 @@ describe('SimulationService', () => {
   });
 
   describe('calculateNextRenewal', () => {
-    it('should add 30 days for monthly billing cycle', () => {
+    it('should add 1 month for monthly billing cycle', () => {
       const currentDate = new Date('2024-01-01');
       const nextDate = service.calculateNextRenewal(currentDate, 'monthly');
       
-      const expectedDate = new Date('2024-01-31');
+      const expectedDate = new Date('2024-02-01');
       expect(nextDate.toISOString()).toBe(expectedDate.toISOString());
     });
 
-    it('should add 90 days for quarterly billing cycle', () => {
+    it('should add 3 months for quarterly billing cycle', () => {
       const currentDate = new Date('2024-01-01');
       const nextDate = service.calculateNextRenewal(currentDate, 'quarterly');
       
-      const expectedDate = new Date('2024-03-31');
+      const expectedDate = new Date('2024-04-01');
       expect(nextDate.toISOString()).toBe(expectedDate.toISOString());
     });
 
@@ -31,6 +31,27 @@ describe('SimulationService', () => {
       
       const expectedDate = new Date('2024-01-01');
       expect(nextDate.toISOString()).toBe(expectedDate.toISOString());
+    });
+    it('should add 1 year correctly for leap years (Feb 29th)', () => {
+      const currentDate = new Date('2024-02-29');
+      const nextDate = service.calculateNextRenewal(currentDate, 'yearly');
+      
+      const expectedDate = new Date('2025-02-28');
+      expect(nextDate.toISOString()).toBe(expectedDate.toISOString());
+    });
+
+    it('should handle month-end transitions correctly (Jan 31st)', () => {
+      const currentDate = new Date('2024-01-31');
+      const nextDate = service.calculateNextRenewal(currentDate, 'monthly');
+      
+      const expectedDate = new Date('2024-02-29'); // 2024 is a leap year
+      expect(nextDate.toISOString()).toBe(expectedDate.toISOString());
+    });
+
+    it('should handle annual and weekly aliases', () => {
+      const currentDate = new Date('2024-01-01');
+      expect(service.calculateNextRenewal(currentDate, 'annual').getFullYear()).toBe(2025);
+      expect(service.calculateNextRenewal(currentDate, 'weekly').getDate()).toBe(8);
     });
   });
 
@@ -140,7 +161,7 @@ describe('SimulationService', () => {
 
       expect(projections).toHaveLength(2);
       expect(projections[0].projectedDate).toBe(new Date('2024-01-01').toISOString());
-      expect(projections[1].projectedDate).toBe(new Date('2024-01-31').toISOString());
+      expect(projections[1].projectedDate).toBe(new Date('2024-02-01').toISOString());
     });
 
     it('should not generate renewals beyond end date', () => {

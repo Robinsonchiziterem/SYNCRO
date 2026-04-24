@@ -70,7 +70,8 @@ const exchangeRateService = new ExchangeRateService([
 ]);
 
 // Sentry Request Handler
-app.use(Sentry.Handlers.requestHandler());
+// No longer needed for Sentry v10 automatic instrumentation
+// app.use(Sentry.Handlers.requestHandler());
 
 // CORS configuration
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
@@ -213,7 +214,8 @@ app.post('/api/admin/expiry/process', createAdminLimiter(), adminAuth, async (re
 });
 
 // Error Handlers
-app.use(Sentry.Handlers.errorHandler());
+// Sentry v10 error handler setup
+Sentry.setupExpressErrorHandler(app);
 app.use(errorHandler);
 
 // Helper Functions (Mnemonic)

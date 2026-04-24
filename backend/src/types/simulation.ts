@@ -4,7 +4,7 @@ export interface ProjectedRenewal {
   provider: string;
   amount: number;
   projectedDate: string; // ISO 8601 format
-  billingCycle: 'monthly' | 'quarterly' | 'yearly';
+  billingCycle: string;
   category: string | null;
 }
 

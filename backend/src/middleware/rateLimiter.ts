@@ -36,8 +36,8 @@ async function initializeRedisClient(): Promise<RedisClientType | null> {
             });
 
             await client.connect();
-            redisClient = client;
-            return client;
+            redisClient = client as any;
+            return client as any;
         } catch (error) {
             logger.error('Failed to initialize renewal rate limiter Redis client:', error);
             redisClient = null;

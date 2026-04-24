@@ -126,8 +126,17 @@ async function findDuplicate(name: string, userId: string): Promise<string | und
   return data?.id;
 }
 
-function renewsInDays(nextRenewal: string | null): number {
-  if (!nextRenewal) return 30;
+function renewsInDays(nextRenewal: string | null, billingCycle: string): number {
+  if (!nextRenewal) {
+    switch (billingCycle.toLowerCase()) {
+      case 'weekly': return 7;
+      case 'monthly': return 30;
+      case 'quarterly': return 90;
+      case 'yearly':
+      case 'annual': return 365;
+      default: return 30;
+    }
+  }
   const ms = Date.parse(nextRenewal) - Date.now();
   return Math.max(0, Math.round(ms / 86_400_000));
 }
@@ -215,7 +224,7 @@ export async function commitImport(
       price: r.data.price,
       currency: r.data.currency,
       billing_cycle: r.data.billing_cycle,
-      renews_in: renewsInDays(r.data.next_renewal),
+      renews_in: renewsInDays(r.data.next_renewal, r.data.billing_cycle),
       category: r.data.category,
       renewal_url: r.data.renewal_url || null,
       status: 'active',

@@ -12,7 +12,6 @@ export interface AuthenticatedRequest extends Request {
     id: string;
     email: string;
     role: UserRole;
-    email?: string;
     authMethod?: 'jwt' | 'api_key';
     scopes?: string[];
   };
@@ -87,6 +86,8 @@ async function authenticateWithApiKey(
 
   req.user = {
     id: keyRecord.user_id,
+    email: '',
+    role: 'member',
     authMethod: 'api_key',
     scopes: Array.isArray(keyRecord.scopes) ? keyRecord.scopes : [],
   };

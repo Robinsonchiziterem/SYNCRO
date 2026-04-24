@@ -13,6 +13,7 @@ import {
 import { calculateBackoffDelay } from '../utils/retry';
 import { userPreferenceService } from './user-preference-service';
 import { notificationPreferenceService } from './notification-preference-service';
+import { subDays } from 'date-fns';
 
 export interface ReminderEngineOptions {
   defaultDaysBefore?: number[];
@@ -163,8 +164,7 @@ export class ReminderEngine {
         today.setHours(0, 0, 0, 0);
 
         for (const days of resolvedPrefs.reminder_days_before) {
-          const reminderDate = new Date(renewalDate);
-          reminderDate.setDate(reminderDate.getDate() - days);
+          const reminderDate = subDays(renewalDate, days);
           reminderDate.setHours(0, 0, 0, 0);
 
           if (reminderDate >= today) {
@@ -462,8 +462,7 @@ export class ReminderEngine {
           : ReminderEngine.TRIAL_REMINDER_DAYS.filter((d) => d !== 14);
 
         for (const days of windows) {
-          const reminderDate = new Date(trialEnd);
-          reminderDate.setDate(reminderDate.getDate() - days);
+          const reminderDate = subDays(trialEnd, days);
           reminderDate.setHours(0, 0, 0, 0);
 
           if (reminderDate >= today) {
@@ -552,28 +551,18 @@ export class ReminderEngine {
 
   private async getSubscription(id: string): Promise<Subscription | null> {
     const { data, error } = await supabase
-
-export class ReminderEngine {
-  async processReminders(): Promise<void> {
-    logger.info('ReminderEngine.processReminders noop');
-  }
-
-  async scheduleReminders(daysBefore: number[] = [7, 3, 1]): Promise<void> {
-    const start = Date.now();
-    // Fetch active subscriptions with upcoming activity (shape matches tests' mocks)
-    const { data: subscriptions } = await (supabase as any)
       .from('subscriptions')
       .select('*')
-      .eq('status', 'active')
-      .not('next_billing_date', 'is', null)
-      .gt('active_until', new Date(0).toISOString()); // value ignored by test mock
+      .eq('id', id)
+      .single();
 
-    const subs = (subscriptions as any[]) || [];
-    const userIds = Array.from(new Set(subs.map(s => s.user_id)));
+    if (error || !data) return null;
+    return data as Subscription;
+  }
 
-    // Batch fetch preferences for involved users
-    const { data: preferences } = await (supabase as any)
-      .from('user_preferences')
+  private async getUserProfile(userId: string): Promise<UserProfile | null> {
+    const { data, error } = await supabase
+      .from('profiles')
       .select('*')
       .eq('id', userId)
       .single();
@@ -669,27 +658,9 @@ export class ReminderEngine {
         logger.warn(`Failed to remove stale push subscriptions for user ${userId}:`, error);
       } else {
         logger.info(`Removed stale push subscriptions for user ${userId}`);
-      .in('user_id', userIds);
-
-    const prefsByUser = new Map<string, { reminder_timing?: number[] }>();
-    (preferences as any[] || []).forEach(p => {
-      prefsByUser.set(p.user_id, p);
-    });
-
-    // Build reminder schedule rows
-    const rows: any[] = [];
-    for (const sub of subs) {
-      const timing: number[] = prefsByUser.get(sub.user_id)?.reminder_timing ?? daysBefore;
-      for (const d of timing) {
-        rows.push({
-          subscription_id: sub.id,
-          user_id: sub.user_id,
-          reminder_date: new Date().toISOString(), // value not asserted in tests
-          days_before: d,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
       }
+    } catch (err) {
+      logger.error(`Failed to remove stale push subscription:`, err);
     }
   }
 
@@ -740,16 +711,25 @@ export class ReminderEngine {
       .from('notification_deliveries')
       .update(updateData)
       .eq('id', deliveryId);
-
-    await (supabase as any)
-      .from('reminder_schedules')
-      .upsert(rows, { onConflict: 'subscription_id,reminder_date' });
-
-    logger.info(`Reminder scheduling completed in ${Date.now() - start}ms`);
+    
+    if (error) throw error;
   }
 
-  async processRetries(): Promise<void> {
-    logger.info('ReminderEngine.processRetries noop');
+  private async markReminderAsFailed(id: string, error: string): Promise<void> {
+    await supabase.from('reminder_schedules').update({
+      status: 'failed',
+      updated_at: new Date().toISOString(),
+    }).eq('id', id);
+    logger.error(`Reminder ${id} failed: ${error}`);
+  }
+
+  private async markDeliveryAsFailed(id: string, error: string): Promise<void> {
+    await supabase.from('notification_deliveries').update({
+      status: 'failed',
+      error_message: error,
+      updated_at: new Date().toISOString(),
+    }).eq('id', id);
+    logger.error(`Delivery ${id} failed: ${error}`);
   }
 }
 

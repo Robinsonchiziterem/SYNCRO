@@ -104,6 +104,6 @@ export function checkRenewalReminders(subscriptions: Subscription[]) {
             name: sub.name,
             price: sub.price,
             renewsIn: sub.renews_in || 0,
-            renewalDate: addDays(new Date(), sub.renews_in || 0),
+            renewalDate: sub.next_billing_date ? new Date(sub.next_billing_date) : addDays(new Date(), sub.renews_in || 0),
         }));
 }

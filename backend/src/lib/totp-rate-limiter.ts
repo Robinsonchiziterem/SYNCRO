@@ -37,4 +37,10 @@ export class TotpRateLimiter {
   reset(sessionId: string): void {
     this.records.delete(sessionId);
   }
+
+  getRetryAfter(sessionId: string): number {
+    const record = this.records.get(sessionId);
+    if (!record?.lockedUntil) return 0;
+    return Math.max(0, Math.ceil((record.lockedUntil - Date.now()) / 1000));
+  }
 }

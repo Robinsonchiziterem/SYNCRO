@@ -1,5 +1,4 @@
 import { Router, Response } from 'express';
-import { z } from 'zol'; // Wait, it's 'zod'
 import { z } from 'zod';
 import multer from 'multer';
 import { subscriptionService } from '../services/subscription-service';
@@ -34,7 +33,7 @@ const safeUrlSchema = z
   .string()
   .url('Must be a valid URL')
   .refine(
-    (val) => {
+    (val: string) => {
       try {
         const { protocol } = new URL(val);
         return protocol === 'http:' || protocol === 'https:';
@@ -51,7 +50,7 @@ const createSubscriptionSchema = z.object({
   billing_cycle: z.enum(['monthly', 'yearly', 'quarterly']),
   currency: z.string()
     .refine(
-      (val) => (SUPPORTED_CURRENCIES as readonly string[]).includes(val),
+      (val: string) => (SUPPORTED_CURRENCIES as readonly string[]).includes(val),
       { message: `Currency must be one of: ${SUPPORTED_CURRENCIES.join(', ')}` }
     )
     .optional(),
@@ -167,7 +166,7 @@ router.post('/', async (req: AuthenticatedRequest, res: Response) => {
  * Get single subscription
  */
 router.get('/:id', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
-  const subscription = await subscriptionService.getSubscription(req.user!.id, req.params.id);
+  const subscription = await subscriptionService.getSubscription(req.user!.id, req.params.id as string);
   res.json({ success: true, data: subscription });
 });
 
@@ -181,7 +180,7 @@ router.patch('/:id', validateSubscriptionOwnership, async (req: AuthenticatedReq
   
   const result = await subscriptionService.updateSubscription(
     req.user!.id,
-    req.params.id,
+    req.params.id as string,
     validatedData,
     expectedVersion ? parseInt(expectedVersion, 10) : undefined
   );
@@ -203,7 +202,7 @@ router.patch('/:id', validateSubscriptionOwnership, async (req: AuthenticatedReq
  * Delete subscription
  */
 router.delete('/:id', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
-  const result = await subscriptionService.deleteSubscription(req.user!.id, req.params.id);
+  const result = await subscriptionService.deleteSubscription(req.user!.id, req.params.id as string);
   
   const statusCode = result.syncStatus === 'failed' ? 207 : 200;
   res.status(statusCode).json({
@@ -221,7 +220,7 @@ router.delete('/:id', validateSubscriptionOwnership, async (req: AuthenticatedRe
  * GET /api/subscriptions/:id/price-history
  */
 router.get('/:id/price-history', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
-  const history = await subscriptionService.getPriceHistory(req.user!.id, req.params.id);
+  const history = await subscriptionService.getPriceHistory(req.user!.id, req.params.id as string);
   res.json({ success: true, data: history });
 });
 
@@ -236,7 +235,7 @@ router.post('/:id/attach-gift-card', validateSubscriptionOwnership, async (req: 
 
   const result = await giftCardService.attachGiftCard(
     req.user!.id,
-    req.params.id,
+    req.params.id as string,
     giftCardHash,
     provider
   );
@@ -260,7 +259,7 @@ router.post('/:id/attach-gift-card', validateSubscriptionOwnership, async (req: 
  */
 router.post('/:id/retry-sync', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const result = await subscriptionService.retryBlockchainSync(req.user!.id, req.params.id);
+    const result = await subscriptionService.retryBlockchainSync(req.user!.id, req.params.id as string);
     res.json({
       success: result.success,
       transactionHash: result.transactionHash,
@@ -283,7 +282,7 @@ router.post('/:id/retry-sync', validateSubscriptionOwnership, async (req: Authen
  * GET /api/subscriptions/:id/cooldown-status
  */
 router.get('/:id/cooldown-status', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
-  const cooldownStatus = await subscriptionService.checkRenewalCooldown(req.params.id);
+  const cooldownStatus = await subscriptionService.checkRenewalCooldown(req.params.id as string);
   res.json({ success: true, ...cooldownStatus });
 });
 
@@ -292,7 +291,7 @@ router.get('/:id/cooldown-status', validateSubscriptionOwnership, async (req: Au
  * Stop billing but keep record
  */
 router.post('/:id/cancel', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
-  const result = await subscriptionService.cancelSubscription(req.user!.id, req.params.id);
+  const result = await subscriptionService.cancelSubscription(req.user!.id, req.params.id as string);
   
   const statusCode = result.syncStatus === 'failed' ? 207 : 200;
   res.status(statusCode).json({
@@ -318,7 +317,7 @@ router.post('/:id/pause', validateSubscriptionOwnership, async (req: Authenticat
 
   const result = await subscriptionService.pauseSubscription(
     req.user!.id,
-    req.params.id,
+    req.params.id as string,
     resumeAt,
     reason
   );
@@ -339,7 +338,7 @@ router.post('/:id/pause', validateSubscriptionOwnership, async (req: Authenticat
  * POST /api/subscriptions/:id/resume
  */
 router.post('/:id/resume', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
-  const result = await subscriptionService.resumeSubscription(req.user!.id, req.params.id);
+  const result = await subscriptionService.resumeSubscription(req.user!.id, req.params.id as string);
   
   const statusCode = result.syncStatus === 'failed' ? 207 : 200;
   res.status(statusCode).json({
@@ -391,7 +390,7 @@ router.patch('/:id/notification-preferences', validateSubscriptionOwnership, asy
   const validatedData = validateRequest(notificationPreferencesSchema, req.body);
   
   const preferences = await notificationPreferenceService.upsertPreferences(
-    req.params.id,
+    req.params.id as string,
     validatedData
   );
 
@@ -404,7 +403,7 @@ router.patch('/:id/notification-preferences', validateSubscriptionOwnership, asy
 router.post('/:id/snooze', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
   const { until } = validateRequest(snoozeSchema, req.body);
   
-  const preferences = await notificationPreferenceService.snooze(req.params.id, until);
+  const preferences = await notificationPreferenceService.snooze(req.params.id as string, until);
 
   res.json({
     success: true,
@@ -417,13 +416,13 @@ router.post('/:id/snooze', validateSubscriptionOwnership, async (req: Authentica
  * Trial conversion routes
  */
 router.post('/:id/trial/convert', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
-  const result = await subscriptionService.convertTrial(req.user!.id, req.params.id);
+  const result = await subscriptionService.convertTrial(req.user!.id, req.params.id as string);
   res.json({ success: true, message: 'Trial converted successfully', data: result });
 });
 
 router.post('/:id/trial/cancel', validateSubscriptionOwnership, async (req: AuthenticatedRequest, res: Response) => {
   const { acted_on_reminder_days } = req.body;
-  const result = await subscriptionService.cancelTrial(req.user!.id, req.params.id, acted_on_reminder_days);
+  const result = await subscriptionService.cancelTrial(req.user!.id, req.params.id as string, acted_on_reminder_days);
   res.json({ success: true, message: 'Trial cancelled successfully', data: result });
 });
 

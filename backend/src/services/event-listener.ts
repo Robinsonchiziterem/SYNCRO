@@ -22,22 +22,21 @@ interface ProcessedEvent {
   event_data: any;
 }
 
-export interface EventListenerHealth {
-  status: 'healthy' | 'unhealthy' | 'stopped';
-  isRunning: boolean;
-  lastSuccessfulPoll: string | null;
-  consecutiveErrors: number;
-  lastProcessedLedger: number;
-}
+export type EventListenerStatus = 'running' | 'stopped' | 'disabled' | 'retrying' | 'failed' | 'healthy' | 'unhealthy';
 
-const ALERT_THRESHOLD = 10;
-const MAX_BACKOFF_MS = 300_000; // 5 minutes
-export type EventListenerStatus = 'running' | 'stopped' | 'disabled' | 'retrying' | 'failed';
+export interface EventListenerHealth {
   status: EventListenerStatus;
+  isRunning?: boolean;
+  lastSuccessfulPoll?: string | null;
+  consecutiveErrors?: number;
   reason?: string;
   lastProcessedLedger: number | null;
   retryCount?: number;
   nextRetryAt?: string | null;
+}
+
+const ALERT_THRESHOLD = 10;
+const MAX_BACKOFF_MS = 300_000; // 5 minutes
 const MAX_RETRY_ATTEMPTS = 10;
 const RETRY_INITIAL_DELAY_MS = 5000;
 const RETRY_MAX_DELAY_MS = 5 * 60 * 1000; // 5 minutes
@@ -79,12 +78,21 @@ export class EventListener {
   }
 
   getHealth(): EventListenerHealth {
+    const healthStatus = !this.isRunning
+      ? 'stopped'
+      : this.consecutiveErrors >= ALERT_THRESHOLD
+      ? 'unhealthy'
+      : this._status;
+
     return {
-      status: this._status,
+      status: healthStatus,
+      isRunning: this.isRunning,
       reason: this._disabledReason,
       lastProcessedLedger: this.lastProcessedLedger || null,
       retryCount: this._retryCount,
       nextRetryAt: this._nextRetryAt?.toISOString() ?? null,
+      lastSuccessfulPoll: this.lastSuccessfulPoll?.toISOString() ?? null,
+      consecutiveErrors: this.consecutiveErrors,
     };
   }
 
@@ -116,24 +124,6 @@ export class EventListener {
     logger.info('Event listener stopped');
   }
 
-  /**
-   * Returns a health snapshot for the admin health endpoint.
-   */
-  getHealth(): EventListenerHealth {
-    const status = !this.isRunning
-      ? 'stopped'
-      : this.consecutiveErrors >= ALERT_THRESHOLD
-      ? 'unhealthy'
-      : 'healthy';
-
-    return {
-      status,
-      isRunning: this.isRunning,
-      lastSuccessfulPoll: this.lastSuccessfulPoll?.toISOString() ?? null,
-      consecutiveErrors: this.consecutiveErrors,
-      lastProcessedLedger: this.lastProcessedLedger,
-    };
-  }
 
   /**
    * Main poll loop with:
@@ -183,24 +173,18 @@ export class EventListener {
       } finally {
         // Always release the mutex, even if fetchAndProcessEvents throws
         this.isProcessing = false;
-        // Reset retry count on success
         if (this._retryCount > 0) {
           logger.info('EventListener recovered after retries', { retryCount: this._retryCount });
           this._retryCount = 0;
           this._nextRetryAt = null;
-        this._status = 'running';
-        logger.error('Event polling error:', error);
-        await this.handlePollError(error);
-        if (!this.isRunning) break;
+          this._status = 'running';
+        }
       }
 
       await this.sleep(backoffMs);
     }
   }
 
-private async fetchAndProcessEvents() {
-  logger.info('Polling for events...');
-  const currentLedger = await this.getCurrentLedger();
   private async handlePollError(error: unknown) {
     this._retryCount++;
 
@@ -466,111 +450,52 @@ private async fetchAndProcessEvents() {
 
   private async handleDuplicateRenewalRejected(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, cycle_id } = event.value;
-
     logger.warn('Duplicate renewal rejected by contract', { sub_id, cycle_id });
+    return { sub_id, event_type: 'duplicate_renewal_rejected', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
+  }
 
-    return {
-      sub_id,
-      event_type: 'duplicate_renewal_rejected',
   private async handleExecutorAssigned(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, executor } = event.value;
-
-    await supabase
-      .from('subscriptions')
-      .update({ executor_address: executor })
-      .eq('blockchain_sub_id', sub_id);
-      event_type: 'executor_assigned',
-      ledger: event.ledger,
-      tx_hash: event.txHash,
-      event_data: event.value,
-    };
+    await supabase.from('subscriptions').update({ executor_address: executor }).eq('blockchain_sub_id', sub_id);
+    return { sub_id, event_type: 'executor_assigned', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
   }
 
   private async handleRenewalLockAcquired(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, locked_at, lock_timeout } = event.value;
-
     logger.info('Renewal lock acquired on-chain', { sub_id, locked_at, lock_timeout });
+    return { sub_id, event_type: 'renewal_lock_acquired', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
+  }
 
-    return {
-      sub_id,
-      event_type: 'renewal_lock_acquired',
   private async handleExecutorRemoved(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id } = event.value;
-
-    await supabase
-      .from('subscriptions')
-      .update({ executor_address: null })
-      .eq('blockchain_sub_id', sub_id);
-      event_type: 'executor_removed',
-      ledger: event.ledger,
-      tx_hash: event.txHash,
-      event_data: event.value,
-    };
+    await supabase.from('subscriptions').update({ executor_address: null }).eq('blockchain_sub_id', sub_id);
+    return { sub_id, event_type: 'executor_removed', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
   }
 
   private async handleRenewalLockReleased(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, released_at } = event.value;
-
     logger.info('Renewal lock released on-chain', { sub_id, released_at });
-
-    return {
-      sub_id,
-      event_type: 'renewal_lock_released',
-      ledger: event.ledger,
-      tx_hash: event.txHash,
-      event_data: event.value,
-    };
+    return { sub_id, event_type: 'renewal_lock_released', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
   }
 
   private async handleRenewalLockExpired(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, original_locked_at, expired_at } = event.value;
-
     logger.warn('Renewal lock expired on-chain', { sub_id, original_locked_at, expired_at });
-
-    return {
-      sub_id,
-      event_type: 'renewal_lock_expired',
-  private async handleDuplicateRenewalRejected(event: ContractEvent): Promise<ProcessedEvent | null> {
-    const { sub_id, cycle_id } = event.value;
-    logger.warn('Duplicate renewal rejected', { sub_id, cycle_id, ledger: event.ledger });
-      event_type: 'duplicate_renewal_rejected',
-      ledger: event.ledger,
-      tx_hash: event.txHash,
-      event_data: event.value,
-    };
+    return { sub_id, event_type: 'renewal_lock_expired', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
   }
 
   private async handleLifecycleTimestampUpdated(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, event_kind, timestamp } = event.value;
-
-    const column = LIFECYCLE_COLUMN_MAP[event_kind];
+    const column = LIFECYCLE_COLUMN_MAP[event_kind as number] || LIFECYCLE_COLUMN_MAP[event_kind];
     if (!column) {
       logger.warn('Unknown lifecycle event_kind', { sub_id, event_kind });
       return null;
     }
-
-    await supabase
-    const column = LIFECYCLE_COLUMN_MAP[event_kind as number];
-      logger.warn('Unknown lifecycle event_kind', { event_kind });
-    const { error } = await supabase
-      .from('subscriptions')
-      .update({ [column]: timestamp })
-      .eq('blockchain_sub_id', sub_id);
-
-    logger.info('Lifecycle timestamp updated', { sub_id, column, timestamp });
-    if (error) {
-      logger.error('Failed to update lifecycle timestamp', { error, sub_id, column });
-    }
-
-    return {
-      sub_id,
-      event_type: 'lifecycle_timestamp_updated',
-      ledger: event.ledger,
-      tx_hash: event.txHash,
-      event_data: event.value,
-    };
+    const { error } = await supabase.from('subscriptions').update({ [column]: timestamp }).eq('blockchain_sub_id', sub_id);
+    if (error) logger.error('Failed to update lifecycle timestamp', { error, sub_id, column });
+    else logger.info('Lifecycle timestamp updated', { sub_id, column, timestamp });
+    return { sub_id, event_type: 'lifecycle_timestamp_updated', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
   }
-  // Duplicate handlers removed below in favor of consolidated implementations later in the file
 
   private async saveEvents(events: ProcessedEvent[]) {
     const { error } = await supabase
