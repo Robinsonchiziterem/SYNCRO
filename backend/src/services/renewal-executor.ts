@@ -2,6 +2,7 @@ import logger from '../config/logger';
 import { supabase } from '../config/database';
 import { blockchainService } from './blockchain-service';
 import { webhookService } from './webhook-service';
+import { addMonths, addQuarters, addYears } from 'date-fns';
 
 interface RenewalRequest {
   subscriptionId: string;
@@ -120,7 +121,7 @@ export class RenewalExecutor {
   ): Promise<{ valid: boolean; reason?: string }> {
     const { data: subscription, error } = await supabase
       .from('subscriptions')
-      .select('next_billing_date, status')
+      .select('next_billing_date, status, billing_cycle')
       .eq('id', subscriptionId)
       .single();
 
@@ -140,7 +141,7 @@ export class RenewalExecutor {
       return { valid: false, reason: 'Too early for renewal' };
     }
 
-    return { valid: true };
+    return { valid: true, billingCycle: subscription.billing_cycle };
   }
 
   private async triggerContractRenewal(
@@ -172,11 +173,25 @@ export class RenewalExecutor {
 
   private async updateSubscription(
     subscriptionId: string,
+    billingCycle: 'monthly' | 'quarterly' | 'yearly',
     transactionHash?: string
   ): Promise<void> {
     const now = new Date();
-    const nextBilling = new Date(now);
-    nextBilling.setMonth(nextBilling.getMonth() + 1);
+    let nextBilling: Date;
+
+    switch (billingCycle) {
+      case 'monthly':
+        nextBilling = addMonths(now, 1);
+        break;
+      case 'quarterly':
+        nextBilling = addQuarters(now, 1);
+        break;
+      case 'yearly':
+        nextBilling = addYears(now, 1);
+        break;
+      default:
+        nextBilling = addMonths(now, 1);
+    }
 
     await supabase
       .from('subscriptions')
