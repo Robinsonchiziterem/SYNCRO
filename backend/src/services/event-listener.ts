@@ -3,7 +3,7 @@ import { supabase } from '../config/database';
 import { reorgHandler } from './reorg-handler';
 import { generateCycleId } from '../utils/cycle-id';
 import { renewalCooldownService } from './renewal-cooldown-service';
-import { calculateBackoffDelay, NonRetryableError } from '../utils/retry';
+import { calculateBackoffDelay } from '../utils/retry';
 
 interface ContractEvent {
   type: string;
@@ -26,15 +26,14 @@ export type EventListenerStatus = 'running' | 'stopped' | 'disabled' | 'retrying
 
 export interface EventListenerHealth {
   status: EventListenerStatus;
-  isRunning?: boolean;
-  lastSuccessfulPoll?: string | null;
-  consecutiveErrors?: number;
-  reason?: string;
+  isRunning: boolean;
+  lastSuccessfulPoll: string | null;
+  consecutiveErrors: number;
   lastProcessedLedger: number | null;
+  reason?: string;
   retryCount?: number;
   nextRetryAt?: string | null;
 }
-
 const ALERT_THRESHOLD = 10;
 const MAX_BACKOFF_MS = 300_000; // 5 minutes
 const MAX_RETRY_ATTEMPTS = 10;
@@ -46,6 +45,8 @@ export class EventListener {
   private rpcUrl: string;
   private lastProcessedLedger: number = 0;
   private isRunning: boolean = false;
+  private isProcessing: boolean = false;
+  private activeRequestController: AbortController | null = null;
 
   // Configurable via env var — defaults to 5 seconds
   private readonly pollInterval: number = parseInt(
@@ -53,12 +54,9 @@ export class EventListener {
     10
   );
 
-  // Resilience state
-  private isProcessing: boolean = false;
+  // Resilience & Health state
   private consecutiveErrors: number = 0;
   private lastSuccessfulPoll: Date | null = null;
-
-  // Health tracking
   private _status: EventListenerStatus = 'stopped';
   private _disabledReason?: string;
   private _retryCount: number = 0;
@@ -66,11 +64,9 @@ export class EventListener {
 
   constructor() {
     this.contractId = process.env.SOROBAN_CONTRACT_ADDRESS || '';
-    this.rpcUrl =
-      process.env.STELLAR_NETWORK_URL || 'https://soroban-testnet.stellar.org';
+    this.rpcUrl = process.env.STELLAR_NETWORK_URL || 'https://soroban-testnet.stellar.org';
 
     if (!this.contractId) {
-      // Don't throw — mark as disabled so the process can still start
       this._status = 'disabled';
       this._disabledReason = 'SOROBAN_CONTRACT_ADDRESS not configured';
       logger.warn('EventListener disabled: SOROBAN_CONTRACT_ADDRESS not configured');
@@ -87,12 +83,12 @@ export class EventListener {
     return {
       status: healthStatus,
       isRunning: this.isRunning,
-      reason: this._disabledReason,
-      lastProcessedLedger: this.lastProcessedLedger || null,
-      retryCount: this._retryCount,
-      nextRetryAt: this._nextRetryAt?.toISOString() ?? null,
       lastSuccessfulPoll: this.lastSuccessfulPoll?.toISOString() ?? null,
       consecutiveErrors: this.consecutiveErrors,
+      lastProcessedLedger: this.lastProcessedLedger || null,
+      reason: this._disabledReason,
+      retryCount: this._retryCount,
+      nextRetryAt: this._nextRetryAt?.toISOString() ?? null,
     };
   }
 
@@ -118,12 +114,12 @@ export class EventListener {
 
   stop() {
     this.isRunning = false;
+    this.abortActiveRequest();
     if (this._status !== 'disabled') {
       this._status = 'stopped';
     }
     logger.info('Event listener stopped');
   }
-
 
   /**
    * Main poll loop with:
@@ -135,7 +131,6 @@ export class EventListener {
     let backoffMs = this.pollInterval;
 
     while (this.isRunning) {
-      // Mutex: skip tick if the previous call is still running
       if (this.isProcessing) {
         logger.warn('EventListener: previous poll still running, skipping tick');
         await this.sleep(backoffMs);
@@ -150,6 +145,13 @@ export class EventListener {
         this.lastSuccessfulPoll = new Date();
         this.consecutiveErrors = 0;
         backoffMs = this.pollInterval;
+        
+        if (this._retryCount > 0) {
+          logger.info('EventListener recovered after retries', { retryCount: this._retryCount });
+          this._retryCount = 0;
+          this._nextRetryAt = null;
+          this._status = 'running';
+        }
       } catch (error) {
         this.consecutiveErrors++;
         backoffMs = Math.min(backoffMs * 2, MAX_BACKOFF_MS);
@@ -160,25 +162,16 @@ export class EventListener {
           nextRetryMs: backoffMs,
         });
 
-        // Fire alert after threshold consecutive failures
         if (this.consecutiveErrors === ALERT_THRESHOLD) {
-          logger.error(
-            `ALERT: EventListener has failed ${ALERT_THRESHOLD} consecutive times`,
-            {
-              lastSuccessfulPoll: this.lastSuccessfulPoll?.toISOString() ?? 'never',
-            }
-          );
-          // Plug in PagerDuty / Slack / email notification here if needed
+          logger.error(`ALERT: EventListener has failed ${ALERT_THRESHOLD} consecutive times`, {
+            lastSuccessfulPoll: this.lastSuccessfulPoll?.toISOString() ?? 'never',
+          });
         }
+
+        await this.handlePollError(error);
+        if (!this.isRunning) break;
       } finally {
-        // Always release the mutex, even if fetchAndProcessEvents throws
         this.isProcessing = false;
-        if (this._retryCount > 0) {
-          logger.info('EventListener recovered after retries', { retryCount: this._retryCount });
-          this._retryCount = 0;
-          this._nextRetryAt = null;
-          this._status = 'running';
-        }
       }
 
       await this.sleep(backoffMs);
@@ -220,45 +213,49 @@ export class EventListener {
   private async fetchAndProcessEvents() {
     const currentLedger = await this.getCurrentLedger();
 
-  // Check for reorg
-  if (currentLedger < this.lastProcessedLedger) {
-    await reorgHandler.handleReorg(currentLedger, this.lastProcessedLedger);
-    this.lastProcessedLedger = await this.getLastProcessedLedger();
-  }
+    // Check for reorg
+    if (currentLedger < this.lastProcessedLedger) {
+      await reorgHandler.handleReorg(currentLedger, this.lastProcessedLedger);
+      this.lastProcessedLedger = await this.getLastProcessedLedger();
+    }
 
-  const events = await this.fetchEvents(this.lastProcessedLedger + 1);
+    const events = await this.fetchEvents(this.lastProcessedLedger + 1);
 
-  if (events.length === 0) return;
+    if (events.length === 0) return;
 
-  const processed = await this.processEvents(events);
+    const processed = await this.processEvents(events);
 
-  if (processed.length > 0) {
-    await this.saveEvents(processed);
+    if (processed.length > 0) {
+      await this.saveEvents(processed);
+    }
+    
     this.lastProcessedLedger = Math.max(...events.map(e => e.ledger));
     await this.updateLastProcessedLedger(this.lastProcessedLedger);
   }
-}
-
-
-
 
   private async fetchEvents(fromLedger: number): Promise<ContractEvent[]> {
-    const response = await fetch(this.rpcUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'getEvents',
-        params: {
-          startLedger: fromLedger,
-          filters: [{ contractIds: [this.contractId] }],
-        },
-      }),
-    });
+    const requestController = this.beginRequest();
+    try {
+      const response = await fetch(this.rpcUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 1,
+          method: 'getEvents',
+          params: {
+            startLedger: fromLedger,
+            filters: [{ contractIds: [this.contractId] }],
+          },
+        }),
+        signal: requestController.signal,
+      });
 
-    const data: any = await response.json();
-    return data.result?.events || [];
+      const data: any = await response.json();
+      return data.result?.events || [];
+    } finally {
+      this.endRequest(requestController);
+    }
   }
 
   private async processEvents(events: ContractEvent[]): Promise<ProcessedEvent[]> {
@@ -318,15 +315,9 @@ export class EventListener {
 
     if (sub?.id) {
       try {
-        await renewalCooldownService.recordRenewalAttempt(
-          sub.id,
-          true,
-          undefined,
-          'automatic'
-        );
+        await renewalCooldownService.recordRenewalAttempt(sub.id, true, undefined, 'automatic');
       } catch (recordError) {
         logger.warn('Failed to record renewal attempt success:', recordError);
-        // Don't throw — the main operation succeeded
       }
     }
 
@@ -369,7 +360,6 @@ export class EventListener {
         );
       } catch (recordError) {
         logger.warn('Failed to record renewal attempt failure:', recordError);
-        // Don't throw — the main operation succeeded
       }
     }
 
@@ -450,7 +440,7 @@ export class EventListener {
 
   private async handleDuplicateRenewalRejected(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, cycle_id } = event.value;
-    logger.warn('Duplicate renewal rejected by contract', { sub_id, cycle_id });
+    logger.warn('Duplicate renewal rejected by contract', { sub_id, cycle_id, ledger: event.ledger });
     return { sub_id, event_type: 'duplicate_renewal_rejected', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
   }
 
@@ -486,15 +476,31 @@ export class EventListener {
 
   private async handleLifecycleTimestampUpdated(event: ContractEvent): Promise<ProcessedEvent | null> {
     const { sub_id, event_kind, timestamp } = event.value;
-    const column = LIFECYCLE_COLUMN_MAP[event_kind as number] || LIFECYCLE_COLUMN_MAP[event_kind];
+
+    const column = LIFECYCLE_COLUMN_MAP[event_kind as number] || (LIFECYCLE_COLUMN_MAP as any)[event_kind];
     if (!column) {
       logger.warn('Unknown lifecycle event_kind', { sub_id, event_kind });
       return null;
     }
-    const { error } = await supabase.from('subscriptions').update({ [column]: timestamp }).eq('blockchain_sub_id', sub_id);
-    if (error) logger.error('Failed to update lifecycle timestamp', { error, sub_id, column });
-    else logger.info('Lifecycle timestamp updated', { sub_id, column, timestamp });
-    return { sub_id, event_type: 'lifecycle_timestamp_updated', ledger: event.ledger, tx_hash: event.txHash, event_data: event.value };
+
+    const { error } = await supabase
+      .from('subscriptions')
+      .update({ [column]: timestamp })
+      .eq('blockchain_sub_id', sub_id);
+
+    if (error) {
+      logger.error('Failed to update lifecycle timestamp', { error, sub_id, column });
+    } else {
+      logger.info('Lifecycle timestamp updated', { sub_id, column, timestamp });
+    }
+
+    return {
+      sub_id,
+      event_type: 'lifecycle_timestamp_updated',
+      ledger: event.ledger,
+      tx_hash: event.txHash,
+      event_data: event.value,
+    };
   }
 
   private async saveEvents(events: ProcessedEvent[]) {
@@ -531,18 +537,42 @@ export class EventListener {
   }
 
   private async getCurrentLedger(): Promise<number> {
-    const response = await fetch(this.rpcUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'getLatestLedger',
-      }),
-    });
+    const requestController = this.beginRequest();
+    try {
+      const response = await fetch(this.rpcUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 1,
+          method: 'getLatestLedger',
+        }),
+        signal: requestController.signal,
+      });
 
-    const data: any = await response.json();
-    return data.result?.sequence || 0;
+      const data: any = await response.json();
+      return data.result?.sequence || 0;
+    } finally {
+      this.endRequest(requestController);
+    }
+  }
+
+  private beginRequest(): AbortController {
+    const controller = new AbortController();
+    this.activeRequestController = controller;
+    return controller;
+  }
+
+  private endRequest(controller: AbortController): void {
+    if (this.activeRequestController === controller) {
+      this.activeRequestController = null;
+    }
+  }
+
+  private abortActiveRequest(): void {
+    if (!this.activeRequestController) return;
+    this.activeRequestController.abort();
+    this.activeRequestController = null;
   }
 
   private sleep(ms: number): Promise<void> {

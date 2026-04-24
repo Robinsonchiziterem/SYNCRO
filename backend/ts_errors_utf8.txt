@@ -1,0 +1,100 @@
+﻿src/services/event-listener.ts(37,10): error TS1109: Expression expected.
+src/services/event-listener.ts(39,14): error TS1109: Expression expected.
+src/services/event-listener.ts(40,15): error TS1109: Expression expected.
+src/services/event-listener.ts(201,1): error TS1128: Declaration or statement expected.
+src/services/event-listener.ts(204,3): error TS1128: Declaration or statement expected.
+src/services/event-listener.ts(483,13): error TS1005: ';' expected.
+src/services/event-listener.ts(484,14): error TS1005: ';' expected.
+src/services/event-listener.ts(485,17): error TS1005: ';' expected.
+src/services/event-listener.ts(486,5): error TS1109: Expression expected.
+src/services/event-listener.ts(486,6): error TS1005: ',' expected.
+src/services/event-listener.ts(489,3): error TS1128: Declaration or statement expected.
+src/services/event-listener.ts(505,13): error TS1005: ';' expected.
+src/services/event-listener.ts(506,14): error TS1005: ';' expected.
+src/services/event-listener.ts(507,17): error TS1005: ';' expected.
+src/services/event-listener.ts(508,5): error TS1109: Expression expected.
+src/services/event-listener.ts(508,6): error TS1005: ',' expected.
+src/services/event-listener.ts(511,3): error TS1128: Declaration or statement expected.
+src/services/event-listener.ts(537,13): error TS1005: ';' expected.
+src/services/event-listener.ts(538,14): error TS1005: ';' expected.
+src/services/event-listener.ts(539,17): error TS1005: ';' expected.
+src/services/event-listener.ts(540,5): error TS1109: Expression expected.
+src/services/event-listener.ts(540,6): error TS1005: ',' expected.
+src/services/event-listener.ts(543,3): error TS1128: Declaration or statement expected.
+src/services/reminder-engine.ts(672,7): error TS1128: Declaration or statement expected.
+src/services/reminder-engine.ts(672,8): error TS1109: Expression expected.
+src/services/reminder-engine.ts(696,3): error TS1128: Declaration or statement expected.
+src/services/reminder-engine.ts(756,52): error TS1005: '}' expected.
+src/services/risk-detection/risk-detection-service.ts(358,11): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(359,4): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(359,18): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(359,27): error TS1005: '(' expected.
+src/services/risk-detection/risk-detection-service.ts(359,31): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(359,38): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(360,4): error TS1003: Identifier expected.
+src/services/risk-detection/risk-detection-service.ts(361,4): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(361,11): error TS1005: ')' expected.
+src/services/risk-detection/risk-detection-service.ts(361,16): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(361,23): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(361,37): error TS1228: A type predicate is only allowed in return type position for functions and methods.
+src/services/risk-detection/risk-detection-service.ts(361,40): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(361,50): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(361,63): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(362,29): error TS1135: Argument expression expected.
+src/services/risk-detection/risk-detection-service.ts(362,41): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(363,4): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(363,13): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(363,16): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/services/risk-detection/risk-detection-service.ts(363,18): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,29): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,34): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,38): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,47): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,67): error TS1003: Identifier expected.
+src/services/risk-detection/risk-detection-service.ts(368,15): error TS1005: ',' expected.
+src/services/risk-detection/risk-detection-service.ts(368,22): error TS1005: ',' expected.
+src/services/risk-detection/risk-detection-service.ts(395,1): error TS1005: '}' expected.
+src/services/subscription-service.ts(500,9): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+src/services/subscription-service.ts(557,9): error TS1005: ';' expected.
+src/services/subscription-service.ts(561,6): error TS1128: Declaration or statement expected.
+src/services/subscription-service.ts(563,3): error TS1434: Unexpected keyword or identifier.
+src/services/subscription-service.ts(564,11): error TS1005: ',' expected.
+src/services/subscription-service.ts(565,19): error TS1005: ',' expected.
+src/services/subscription-service.ts(566,4): error TS1005: ';' expected.
+src/services/subscription-service.ts(567,12): error TS1005: ':' expected.
+src/services/subscription-service.ts(625,9): error TS1005: ';' expected.
+src/services/subscription-service.ts(629,6): error TS1128: Declaration or statement expected.
+src/services/subscription-service.ts(629,7): error TS1005: ',' expected.
+src/services/subscription-service.ts(652,3): error TS1434: Unexpected keyword or identifier.
+src/services/subscription-service.ts(653,11): error TS1005: ',' expected.
+src/services/subscription-service.ts(654,12): error TS1005: ',' expected.
+src/services/subscription-service.ts(655,4): error TS1005: ';' expected.
+src/services/subscription-service.ts(656,11): error TS1005: ':' expected.
+src/services/subscription-service.ts(656,53): error TS1005: ',' expected.
+src/services/subscription-service.ts(658,9): error TS1005: ',' expected.
+src/services/subscription-service.ts(663,24): error TS1005: ',' expected.
+src/services/subscription-service.ts(665,16): error TS1005: ',' expected.
+src/services/subscription-service.ts(665,23): error TS1005: ',' expected.
+src/services/subscription-service.ts(665,25): error TS1136: Property assignment expected.
+src/services/subscription-service.ts(713,11): error TS1005: ':' expected.
+src/services/subscription-service.ts(713,48): error TS1005: ',' expected.
+src/services/subscription-service.ts(714,11): error TS1005: ':' expected.
+src/services/subscription-service.ts(714,73): error TS1005: ',' expected.
+src/services/subscription-service.ts(716,11): error TS1005: ':' expected.
+src/services/subscription-service.ts(723,15): error TS1005: ',' expected.
+src/services/subscription-service.ts(734,3): error TS1434: Unexpected keyword or identifier.
+src/services/subscription-service.ts(735,19): error TS1005: ',' expected.
+src/services/subscription-service.ts(736,4): error TS1005: ';' expected.
+src/services/subscription-service.ts(737,22): error TS1005: ',' expected.
+src/services/subscription-service.ts(738,26): error TS1005: ',' expected.
+src/services/subscription-service.ts(739,33): error TS1005: ',' expected.
+src/services/subscription-service.ts(740,20): error TS1005: ',' expected.
+src/services/subscription-service.ts(742,9): error TS1005: ':' expected.
+src/services/subscription-service.ts(743,13): error TS1005: ':' expected.
+src/services/subscription-service.ts(743,88): error TS1005: ',' expected.
+src/services/subscription-service.ts(745,14): error TS1005: ':' expected.
+src/services/subscription-service.ts(752,8): error TS1005: ',' expected.
+src/services/subscription-service.ts(753,7): error TS1005: ',' expected.
+src/services/subscription-service.ts(762,3): error TS1005: ',' expected.
+src/services/subscription-service.ts(838,3): error TS1005: ',' expected.
+src/services/subscription-service.ts(859,1): error TS1005: '}' expected.

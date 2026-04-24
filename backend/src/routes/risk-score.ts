@@ -2,10 +2,13 @@ import express, { Response } from 'express';
 import { z } from 'zod';
 import { riskDetectionService } from '../services/risk-detection/risk-detection-service';
 import { authenticate, AuthenticatedRequest } from '../middleware/auth';
+import { adminAuth } from '../middleware/admin';
 import { validateRequest } from '../utils/validation';
 import { NotFoundError } from '../errors';
 
-const router = express.Router();
+const router: express.Router = express.Router();
+
+// Apply authentication to all routes
 router.use(authenticate);
 
 const subscriptionParamSchema = z.object({
@@ -53,15 +56,11 @@ router.get('/', async (req: AuthenticatedRequest, res: Response) => {
 
 /**
  * POST /api/risk-score/recalculate
+ * Admin-only trigger for full risk recalculation
  */
-router.post('/recalculate', async (req: AuthenticatedRequest, res: Response) => {
-  // TODO: Add admin check (e.g., req.user.role === 'admin')
+router.post('/recalculate', adminAuth, async (req: AuthenticatedRequest, res: Response) => {
   const result = await riskDetectionService.recalculateAllRisks();
-
-  res.json({
-    success: true,
-    data: result,
-  });
+  res.json({ success: true, data: result });
 });
 
 /**

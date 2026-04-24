@@ -1,0 +1,66 @@
+﻿src/services/risk-detection/risk-detection-service.ts(358,11): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(359,4): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(359,18): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(359,27): error TS1005: '(' expected.
+src/services/risk-detection/risk-detection-service.ts(359,31): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(359,38): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(360,4): error TS1003: Identifier expected.
+src/services/risk-detection/risk-detection-service.ts(361,4): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(361,11): error TS1005: ')' expected.
+src/services/risk-detection/risk-detection-service.ts(361,16): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(361,23): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(361,37): error TS1228: A type predicate is only allowed in return type position for functions and methods.
+src/services/risk-detection/risk-detection-service.ts(361,40): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(361,50): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(361,63): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(362,29): error TS1135: Argument expression expected.
+src/services/risk-detection/risk-detection-service.ts(362,41): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(363,4): error TS1109: Expression expected.
+src/services/risk-detection/risk-detection-service.ts(363,13): error TS1005: ';' expected.
+src/services/risk-detection/risk-detection-service.ts(363,16): error TS1351: An identifier or keyword cannot immediately follow a numeric literal.
+src/services/risk-detection/risk-detection-service.ts(363,18): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,29): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,34): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,38): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,47): error TS1434: Unexpected keyword or identifier.
+src/services/risk-detection/risk-detection-service.ts(363,67): error TS1003: Identifier expected.
+src/services/risk-detection/risk-detection-service.ts(368,15): error TS1005: ',' expected.
+src/services/risk-detection/risk-detection-service.ts(368,22): error TS1005: ',' expected.
+src/services/risk-detection/risk-detection-service.ts(395,1): error TS1005: '}' expected.
+src/services/subscription-service.ts(500,9): error TS1068: Unexpected token. A constructor, method, accessor, or property was expected.
+src/services/subscription-service.ts(506,3): error TS1434: Unexpected keyword or identifier.
+src/services/subscription-service.ts(506,31): error TS1005: ',' expected.
+src/services/subscription-service.ts(506,55): error TS1005: ',' expected.
+src/services/subscription-service.ts(506,64): error TS1005: ';' expected.
+src/services/subscription-service.ts(507,11): error TS1005: ':' expected.
+src/services/subscription-service.ts(512,16): error TS1005: ',' expected.
+src/services/subscription-service.ts(514,15): error TS1005: ',' expected.
+src/services/subscription-service.ts(514,31): error TS1005: ';' expected.
+src/services/subscription-service.ts(519,3): error TS1128: Declaration or statement expected.
+src/services/subscription-service.ts(525,3): error TS1434: Unexpected keyword or identifier.
+src/services/subscription-service.ts(526,11): error TS1005: ',' expected.
+src/services/subscription-service.ts(527,12): error TS1005: ',' expected.
+src/services/subscription-service.ts(528,4): error TS1005: ';' expected.
+src/services/subscription-service.ts(529,11): error TS1005: ':' expected.
+src/services/subscription-service.ts(529,53): error TS1005: ',' expected.
+src/services/subscription-service.ts(531,9): error TS1005: ',' expected.
+src/services/subscription-service.ts(536,24): error TS1005: ',' expected.
+src/services/subscription-service.ts(538,16): error TS1005: ',' expected.
+src/services/subscription-service.ts(538,23): error TS1005: ',' expected.
+src/services/subscription-service.ts(538,25): error TS1136: Property assignment expected.
+src/services/subscription-service.ts(602,3): error TS1128: Declaration or statement expected.
+src/services/subscription-service.ts(608,3): error TS1434: Unexpected keyword or identifier.
+src/services/subscription-service.ts(609,19): error TS1005: ',' expected.
+src/services/subscription-service.ts(610,4): error TS1005: ';' expected.
+src/services/subscription-service.ts(611,22): error TS1005: ',' expected.
+src/services/subscription-service.ts(612,26): error TS1005: ',' expected.
+src/services/subscription-service.ts(613,33): error TS1005: ',' expected.
+src/services/subscription-service.ts(614,20): error TS1005: ',' expected.
+src/services/subscription-service.ts(616,9): error TS1005: ':' expected.
+src/services/subscription-service.ts(617,13): error TS1005: ':' expected.
+src/services/subscription-service.ts(617,88): error TS1005: ',' expected.
+src/services/subscription-service.ts(619,14): error TS1005: ':' expected.
+src/services/subscription-service.ts(626,8): error TS1005: ',' expected.
+src/services/subscription-service.ts(627,7): error TS1005: ',' expected.
+src/services/subscription-service.ts(636,3): error TS1005: ',' expected.
+src/services/subscription-service.ts(712,3): error TS1005: ',' expected.

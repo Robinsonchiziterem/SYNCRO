@@ -5,6 +5,7 @@ import { analyticsService } from "./analytics-service";
 import { webhookService } from "./webhook-service";
 import logger from "../config/logger";
 import { DatabaseTransaction } from "../utils/transaction";
+import SERVICE_CATEGORIES from "../../services/service-categories";
 import type {
   Subscription,
   SubscriptionCreateInput,
@@ -47,7 +48,7 @@ export class SubscriptionService {
             billing_cycle: input.billing_cycle,
             status: input.status || "active",
             next_billing_date: input.next_billing_date || null,
-            category: input.category || null,
+            category: input.category || this.autoTag(input.name),
             logo_url: input.logo_url || null,
             website_url: input.website_url || null,
             renewal_url: input.renewal_url || null,
@@ -206,31 +207,49 @@ export class SubscriptionService {
   ): Promise<SubscriptionSyncResult> {
     return await DatabaseTransaction.execute(async (client) => {
       try {
-        const { data: subscription, error: fetchError } = await client
+        // 1. Fetch and verify ownership
+        const { data: existing, error: fetchError } = await client
           .from("subscriptions")
           .select("*")
           .eq("id", subscriptionId)
           .eq("user_id", userId)
           .single();
 
-        if (fetchError || !subscription) {
+        if (fetchError || !existing) {
           throw new Error("Subscription not found or access denied");
         }
 
-        const { error: deleteError } = await client
+        // 2. Soft delete - update status to deleted
+        const { data: subscription, error: updateError } = await client
           .from("subscriptions")
-          .delete()
-          .eq("id", subscriptionId);
+          .update({
+            status: "deleted",
+            deleted_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", subscriptionId)
+          .eq("user_id", userId)
+          .select()
+          .single();
 
-        if (deleteError) {
-           throw new Error(`Delete failed: ${deleteError.message}`);
+        if (updateError) {
+          throw new Error(`Delete failed: ${updateError.message}`);
         }
 
+        // 3. Cancel all pending reminders for this subscription
         const { error: reminderError } = await client
           .from("reminder_schedules")
           .delete()
           .eq("subscription_id", subscriptionId);
 
+        if (reminderError) {
+          logger.warn("Failed to delete reminders during subscription deletion", {
+            subscriptionId,
+            error: reminderError.message,
+          });
+        }
+
+        // 4. Sync to blockchain (non-fatal if it fails)
         let blockchainResult;
         let syncStatus: "synced" | "partial" | "failed" = "synced";
 
@@ -244,14 +263,28 @@ export class SubscriptionService {
 
           if (!blockchainResult.success) {
             syncStatus = "partial";
+            logger.warn("Blockchain sync failed for subscription deletion", {
+              subscriptionId,
+              error: blockchainResult.error,
+            });
           }
         } catch (blockchainError) {
           syncStatus = "partial";
+          logger.error("Blockchain sync error during deletion (non-fatal):", blockchainError);
           blockchainResult = {
             success: false,
-            error: blockchainError instanceof Error ? blockchainError.message : String(blockchainError),
+            error:
+              blockchainError instanceof Error
+                ? blockchainError.message
+                : String(blockchainError),
           };
         }
+
+        // 5. Log and trigger budget check
+        logger.info("Subscription deleted", { subscriptionId, userId, syncStatus });
+        analyticsService.checkBudgetThreshold(userId).catch(e =>
+          logger.error('Background budget check failed:', e)
+        );
 
         return {
           subscription,
@@ -339,6 +372,7 @@ export class SubscriptionService {
       }
     });
   }
+
 
   async convertTrial(userId: string, subscriptionId: string): Promise<any> { return {}; }
   async cancelTrial(userId: string, subscriptionId: string, actedOnReminder?: boolean): Promise<any> { return {}; }
@@ -510,6 +544,7 @@ export class SubscriptionService {
   }
 
 
+
   /**
    * Get subscription by ID (with ownership check)
    */
@@ -528,9 +563,8 @@ export class SubscriptionService {
     return subscription;
   }
 
-  // List user's subscriptions with cursor-based pagination
   /**
-   * List user's subscriptions with optional filtering
+   * List user's subscriptions with optional filtering and cursor-based pagination
    */
   async listSubscriptions(
     userId: string,
@@ -610,6 +644,7 @@ export class SubscriptionService {
       nextCursor,
     };
   }
+
 
   /**
    * Check if a renewal can be attempted based on cooldown period.
@@ -737,6 +772,32 @@ export class SubscriptionService {
     }
 
     return data || [];
+  }
+
+  /**
+   * Auto-tag a subscription with a category based on its name.
+   * Uses keyword mapping from SERVICE_CATEGORIES lookup table.
+   * Falls back to 'other' if no match is found.
+   */
+  autoTag(name: string): string {
+    const normalized = name
+      .toLowerCase()
+      .replace(/\s+(plus|pro|premium|basic|standard|enterprise|team|business)$/i, '')
+      .trim();
+
+    // Exact match first
+    if (SERVICE_CATEGORIES[normalized]) {
+      return SERVICE_CATEGORIES[normalized];
+    }
+
+    // Partial match — check if any key is contained in the name or vice versa
+    for (const [key, category] of Object.entries(SERVICE_CATEGORIES)) {
+      if (normalized.includes(key) || key.includes(normalized)) {
+        return category;
+      }
+    }
+
+    return 'other';
   }
 }
 

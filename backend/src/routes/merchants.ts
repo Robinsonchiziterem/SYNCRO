@@ -76,10 +76,7 @@ router.get('/', async (req: Request, res: Response) => {
  */
 router.get('/:id', async (req: Request, res: Response) => {
   const merchant = await merchantService.getMerchant(req.params.id as string);
-  res.json({
-    success: true,
-    data: merchant,
-  });
+  res.json({ success: true, data: merchant });
 });
 
 /**
@@ -89,11 +86,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 router.post('/', adminAuth, async (req: Request, res: Response) => {
   const validatedData = validateRequest(createMerchantSchema, req.body);
   const merchant = await merchantService.createMerchant(validatedData);
-
-  res.status(201).json({
-    success: true,
-    data: merchant,
-  });
+  res.status(201).json({ success: true, data: merchant });
 });
 
 /**
@@ -103,11 +96,7 @@ router.post('/', adminAuth, async (req: Request, res: Response) => {
 router.patch('/:id', adminAuth, renewalRateLimiter, async (req: Request, res: Response) => {
   const validatedData = validateRequest(updateMerchantSchema, req.body);
   const merchant = await merchantService.updateMerchant(req.params.id as string, validatedData);
-
-  res.json({
-    success: true,
-    data: merchant,
-  });
+  res.json({ success: true, data: merchant });
 });
 
 /**
@@ -116,11 +105,7 @@ router.patch('/:id', adminAuth, renewalRateLimiter, async (req: Request, res: Re
  */
 router.delete('/:id', adminAuth, async (req: Request, res: Response) => {
   await merchantService.deleteMerchant(req.params.id as string);
-
-  res.json({
-    success: true,
-    message: 'Merchant deleted',
-  });
+  res.json({ success: true, message: 'Merchant deleted' });
 });
 
 export default router;

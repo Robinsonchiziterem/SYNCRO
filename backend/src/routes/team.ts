@@ -34,11 +34,7 @@ const updateRoleSchema = z.object({
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-/**
- * Find the team associated with a user (owned or member).
- */
-async function resolveUserTeam(userId: string) {
-  // Check ownership
+async function resolveUserTeam(userId: string): Promise<{ teamId: string; isOwner: boolean; memberRole: string | null } | null> {
   const { data: ownedTeam } = await supabase
     .from('teams')
     .select('id')
@@ -49,7 +45,6 @@ async function resolveUserTeam(userId: string) {
     return { teamId: ownedTeam.id, isOwner: true, memberRole: null };
   }
 
-  // Check membership
   const { data: membership } = await supabase
     .from('team_members')
     .select('team_id, role')
@@ -71,7 +66,6 @@ function canManageTeam(ctx: { isOwner: boolean; memberRole: string | null }): bo
 
 /**
  * GET /api/team
- * List team members
  */
 router.get('/', async (req: AuthenticatedRequest, res: Response) => {
   const ctx = await resolveUserTeam(req.user!.id);
@@ -112,7 +106,6 @@ router.post('/invite', createTeamInviteLimiter(), async (req: AuthenticatedReque
   let ctx = await resolveUserTeam(req.user!.id);
 
   if (!ctx) {
-    // Auto-create a team for first-time owners
     const { data: newTeam, error: createErr } = await supabase
       .from('teams')
       .insert({ name: `${req.user!.email}'s Team`, owner_id: req.user!.id })
@@ -127,7 +120,6 @@ router.post('/invite', createTeamInviteLimiter(), async (req: AuthenticatedReque
     throw new ForbiddenError('Only team owners and admins can invite members');
   }
 
-  // Check for an existing active invitation
   const { data: existing } = await supabase
     .from('team_invitations')
     .select('id')
@@ -141,8 +133,6 @@ router.post('/invite', createTeamInviteLimiter(), async (req: AuthenticatedReque
     throw new ConflictError('A pending invitation already exists for this email');
   }
 
-  // Check if already a member
-  // Note: This requires admin lookup which might be restricted or slow
   const { data: userLookup } = await (supabase.auth.admin as any).getUserByEmail?.(email) || { data: { user: null } };
   if (userLookup?.user) {
     const { data: alreadyMember } = await supabase
@@ -243,7 +233,7 @@ router.post('/accept/:token', async (req: AuthenticatedRequest, res: Response) =
   }
 
   if (new Date(invitation.expires_at) < new Date()) {
-    throw new BadRequestError('Invitation has expired'); // Or perhaps a custom 410 if desired, but 400/404 is cleaner
+    throw new BadRequestError('Invitation has expired');
   }
 
   if (req.user!.email !== invitation.email) {

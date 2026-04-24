@@ -1,0 +1,101 @@
+﻿src/config/logger.ts(1,21): error TS2307: Cannot find module 'winston' or its corresponding type declarations.
+src/index.ts(6,23): error TS2307: Cannot find module 'swagger-ui-express' or its corresponding type declarations.
+src/index.ts(73,16): error TS2339: Property 'Handlers' does not exist on type 'typeof import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@sentry/node/build/types/index")'.
+src/index.ts(216,16): error TS2339: Property 'Handlers' does not exist on type 'typeof import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@sentry/node/build/types/index")'.
+src/middleware/auth.ts(13,5): error TS2300: Duplicate identifier 'email'.
+src/middleware/auth.ts(13,5): error TS2687: All declarations of 'email' must have identical modifiers.
+src/middleware/auth.ts(15,5): error TS2300: Duplicate identifier 'email'.
+src/middleware/auth.ts(15,5): error TS2687: All declarations of 'email' must have identical modifiers.
+src/middleware/auth.ts(15,5): error TS2717: Subsequent property declarations must have the same type.  Property 'email' must be of type 'string', but here has type 'string | undefined'.
+src/middleware/auth.ts(88,3): error TS2741: Property 'role' is missing in type '{ id: any; authMethod: "api_key"; scopes: any[]; }' but required in type '{ id: string; email?: string; role: UserRole; authMethod?: "jwt" | "api_key" | undefined; scopes?: string[] | undefined; }'.
+src/middleware/rateLimiter.ts(26,5): error TS2322: Type 'Promise<RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type...' is not assignable to type 'Promise<RedisClientType | null>'.
+  Type 'RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...;...' is not assignable to type 'RedisClientType | null'.
+    Type 'RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...;...' is not assignable to type 'RedisClientType | null'.
+      Type 'RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...;...' is not assignable to type 'RedisClientType'.
+        Type 'RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...;...' is not assignable to type 'RedisClient<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...; }; ...'.
+          Types of property 'options' are incompatible.
+            Type 'import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/index").RedisClientOptions<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/parser").CommandP...' is not assignable to type 'import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/index").RedisClientOptions<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/parser").CommandP...'. Two different types with this name exist, but they are unrelated.
+              Type 'RespVersions' is not assignable to type '2'.
+                Type '3' is not assignable to type '2'.
+src/middleware/rateLimiter.ts(39,13): error TS2322: Type 'RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...;...' is not assignable to type 'RedisClientType | null'.
+  Type 'RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...;...' is not assignable to type 'RedisClientType'.
+    Type 'RedisClientType<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...;...' is not assignable to type 'RedisClient<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: CommandParser, key: RedisArgument, path: RedisArgument, json: RedisJSON, ...jsons: RedisJSON[]) => void; readonly transformReply: () => NumberReply<...> | ArrayReply<...>; }; ... 44 more ...; type: { ...; }; ...'.
+      Types of property 'options' are incompatible.
+        Type 'import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/index").RedisClientOptions<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/parser").CommandP...' is not assignable to type 'import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/index").RedisClientOptions<{ json: { ARRAPPEND: { readonly IS_READ_ONLY: false; readonly parseCommand: (this: void, parser: import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@redis/client/dist/lib/client/parser").CommandP...'. Two different types with this name exist, but they are unrelated.
+          Type 'RespVersions' is not assignable to type '2'.
+            Type '3' is not assignable to type '2'.
+src/routes/digest.ts(52,11): error TS2554: Expected 2 arguments, but got 1.
+src/routes/merchants.ts(78,54): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/merchants.ts(105,57): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/merchants.ts(118,40): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/mfa.ts(40,11): error TS2554: Expected 2 arguments, but got 1.
+src/routes/mfa.ts(47,13): error TS2554: Expected 2 arguments, but got 1.
+src/routes/subscriptions.ts(2,10): error TS2300: Duplicate identifier 'z'.
+src/routes/subscriptions.ts(2,19): error TS2307: Cannot find module 'zol' or its corresponding type declarations.
+src/routes/subscriptions.ts(3,10): error TS2300: Duplicate identifier 'z'.
+src/routes/subscriptions.ts(37,6): error TS7006: Parameter 'val' implicitly has an 'any' type.
+src/routes/subscriptions.ts(54,8): error TS7006: Parameter 'val' implicitly has an 'any' type.
+src/routes/subscriptions.ts(170,80): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(182,44): error TS2551: Property 'updateSubscription' does not exist on type 'SubscriptionService'. Did you mean 'pauseSubscription'?
+src/routes/subscriptions.ts(206,77): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(userId: string, subscriptionId: string): Promise<SubscriptionSyncResult>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+      Type 'string[]' is not assignable to type 'string'.
+  Overload 2 of 2, '(userId: string, subscriptionId: string): Promise<SubscriptionSyncResult>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+      Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(224,75): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(239,5): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(263,80): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(286,73): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(295,77): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(321,5): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(342,77): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(372,44): error TS2551: Property 'updateSubscription' does not exist on type 'SubscriptionService'. Did you mean 'pauseSubscription'?
+src/routes/subscriptions.ts(394,5): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(407,66): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(420,44): error TS2339: Property 'convertTrial' does not exist on type 'SubscriptionService'.
+src/routes/subscriptions.ts(426,44): error TS2339: Property 'cancelTrial' does not exist on type 'SubscriptionService'.
+src/routes/subscriptions.ts(431,43): error TS2339: Property 'getSavedTrialsCount' does not exist on type 'SubscriptionService'.
+src/routes/subscriptions.ts(438,45): error TS2339: Property 'previewImport' does not exist on type 'SubscriptionService'.
+src/routes/subscriptions.ts(445,44): error TS2339: Property 'commitImport' does not exist on type 'SubscriptionService'.
+src/routes/v1/index.ts(9,24): error TS2307: Cannot find module '../user' or its corresponding type declarations.
+src/routes/v1/index.ts(10,31): error TS2307: Cannot find module '../integrations' or its corresponding type declarations.
+src/routes/webhooks.ts(58,68): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/webhooks.ts(66,52): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/webhooks.ts(74,72): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/webhooks.ts(82,71): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/services/health-service.ts(4,25): error TS2300: Duplicate identifier 'EventListenerHealth'.
+src/services/health-service.ts(5,15): error TS2300: Duplicate identifier 'EventListenerHealth'.
+src/services/health-service.ts(262,11): error TS2451: Cannot redeclare block-scoped variable 'status'.
+src/services/health-service.ts(293,11): error TS2451: Cannot redeclare block-scoped variable 'status'.
+src/services/health-service.ts(303,7): error TS1117: An object literal cannot have multiple properties with the same name.
+src/services/subscription-service.ts(119,9): error TS2393: Duplicate function implementation.
+src/services/subscription-service.ts(146,17): error TS2339: Property 'data' does not exist on type 'SupabaseClient<any, "public", "public", any, any>'.
+src/services/subscription-service.ts(146,37): error TS2339: Property 'error' does not exist on type 'SupabaseClient<any, "public", "public", any, any>'.
+src/services/subscription-service.ts(154,11): error TS18004: No value exists in scope for the shorthand property 'blockchainResult'. Either declare one or provide an initializer.
+src/services/subscription-service.ts(155,11): error TS18004: No value exists in scope for the shorthand property 'syncStatus'. Either declare one or provide an initializer.
+src/services/subscription-service.ts(202,17): error TS2339: Property 'error' does not exist on type 'PostgrestQueryBuilder<any, any, any, "reminder_schedules", unknown>'.
+src/services/subscription-service.ts(250,9): error TS2393: Duplicate function implementation.
+src/services/subscription-service.ts(272,13): error TS2304: Cannot find name 'reminderError'.
+src/services/subscription-service.ts(275,20): error TS2304: Cannot find name 'reminderError'.
+src/services/subscription-service.ts(290,13): error TS2554: Expected 4 arguments, but got 5.
+src/swagger.ts(1,26): error TS7016: Could not find a declaration file for module 'swagger-jsdoc'. 'C:/Users/hp/Downloads/SYNCRO/backend/node_modules/swagger-jsdoc/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/swagger-jsdoc` if it exists or add a new declaration (.d.ts) file containing `declare module 'swagger-jsdoc';`

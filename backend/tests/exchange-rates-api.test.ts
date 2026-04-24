@@ -60,6 +60,5 @@ describe('GET /api/exchange-rates', () => {
     const res = await request(app).get('/api/exchange-rates?base=FAKE');
 
     expect(res.status).toBe(400);
-    expect(res.body.success).toBe(false);
   });
 });

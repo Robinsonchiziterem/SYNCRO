@@ -268,6 +268,9 @@ export class HealthService {
     // Degrade overall status if event listener is not running
     const elHealth: EventListenerHealth = eventListenerHealth ?? {
       status: 'stopped',
+      isRunning: false,
+      lastSuccessfulPoll: null,
+      consecutiveErrors: 0,
       lastProcessedLedger: null,
     };
     if (elHealth.status === 'disabled' || elHealth.status === 'failed') {

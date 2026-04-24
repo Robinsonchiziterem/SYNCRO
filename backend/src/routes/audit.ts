@@ -88,18 +88,18 @@ router.get('/', adminAuth, async (req: Request, res: Response) => {
 
   const [logs, total] = await Promise.all([
     auditService.getAllLogs({
-      action: action as string | undefined,
-      resourceType: resourceType as string | undefined,
-      userId: userId as string | undefined,
+      action,
+      resourceType,
+      userId,
       limit: parsedLimit,
       offset: parsedOffset,
-      startDate: startDate as string | undefined,
-      endDate: endDate as string | undefined,
+      startDate,
+      endDate,
     }),
     auditService.getLogsCount({
-      action: action as string | undefined,
-      resourceType: resourceType as string | undefined,
-      userId: userId as string | undefined,
+      action,
+      resourceType,
+      userId,
     }),
   ]);
 

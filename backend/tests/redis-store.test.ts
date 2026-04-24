@@ -25,6 +25,7 @@ describe('RateLimitRedisStore', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (RateLimitRedisStore as any).instance = undefined;
     
     mockRedisClient = {
       connect: jest.fn().mockResolvedValue(undefined),

@@ -9,7 +9,7 @@ import { emailService } from '../services/email-service';
 import { validateRequest } from '../utils/validation';
 import { RateLimitError, UnauthorizedError, NotFoundError, ForbiddenError } from '../errors';
 
-const router = Router();
+const router: Router = Router();
 const totpRateLimiter = new TotpRateLimiter();
 router.use(authenticate);
 

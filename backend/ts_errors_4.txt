@@ -1,0 +1,58 @@
+﻿src/config/logger.ts(1,21): error TS2307: Cannot find module 'winston' or its corresponding type declarations.
+src/index.ts(6,23): error TS2307: Cannot find module 'swagger-ui-express' or its corresponding type declarations.
+src/index.ts(73,16): error TS2339: Property 'Handlers' does not exist on type 'typeof import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@sentry/node/build/types/index")'.
+src/index.ts(216,16): error TS2339: Property 'Handlers' does not exist on type 'typeof import("C:/Users/hp/Downloads/SYNCRO/backend/node_modules/@sentry/node/build/types/index")'.
+src/routes/digest.ts(52,11): error TS2554: Expected 2 arguments, but got 1.
+src/routes/merchants.ts(78,54): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/merchants.ts(105,57): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/merchants.ts(118,40): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/mfa.ts(40,11): error TS2554: Expected 2 arguments, but got 1.
+src/routes/mfa.ts(47,13): error TS2554: Expected 2 arguments, but got 1.
+src/routes/subscriptions.ts(169,80): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(183,5): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(205,77): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(223,75): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(238,5): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(262,80): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(285,73): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(294,77): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(320,5): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(341,77): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(393,5): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(406,66): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(419,71): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/subscriptions.ts(425,70): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/v1/index.ts(9,24): error TS2307: Cannot find module '../user' or its corresponding type declarations.
+src/routes/v1/index.ts(10,31): error TS2307: Cannot find module '../integrations' or its corresponding type declarations.
+src/routes/webhooks.ts(58,68): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/webhooks.ts(66,52): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/webhooks.ts(74,72): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/routes/webhooks.ts(82,71): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+src/services/health-service.ts(4,25): error TS2300: Duplicate identifier 'EventListenerHealth'.
+src/services/health-service.ts(5,15): error TS2300: Duplicate identifier 'EventListenerHealth'.
+src/services/health-service.ts(262,11): error TS2451: Cannot redeclare block-scoped variable 'status'.
+src/services/health-service.ts(293,11): error TS2451: Cannot redeclare block-scoped variable 'status'.
+src/services/health-service.ts(303,7): error TS1117: An object literal cannot have multiple properties with the same name.
+src/swagger.ts(1,26): error TS7016: Could not find a declaration file for module 'swagger-jsdoc'. 'C:/Users/hp/Downloads/SYNCRO/backend/node_modules/swagger-jsdoc/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/swagger-jsdoc` if it exists or add a new declaration (.d.ts) file containing `declare module 'swagger-jsdoc';`

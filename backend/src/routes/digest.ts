@@ -7,7 +7,7 @@ import { digestEmailService } from '../services/digest-email-service';
 import { validateRequest } from '../utils/validation';
 import { BadRequestError, RateLimitError } from '../errors';
 
-const router = Router();
+const router: Router = Router();
 
 // ─── User-facing routes (authenticated) ──────────────────────────────────────
 router.use(authenticate);

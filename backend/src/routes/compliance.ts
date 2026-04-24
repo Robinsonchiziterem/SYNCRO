@@ -1,13 +1,14 @@
 import { Router, Request, Response } from 'express';
 import archiver from 'archiver';
 import { authenticate, AuthenticatedRequest } from '../middleware/auth';
+import { validate } from '../middleware/validate';
 import { complianceService } from '../services/compliance-service';
 import { supabase } from '../config/database';
 import logger from '../config/logger';
 import { RateLimiterFactory } from '../middleware/rate-limit-factory';
 import { BadRequestError, NotFoundError, ConflictError, UnauthorizedError } from '../errors';
 
-const router = Router();
+const router: Router = Router();
 
 // ─── XSS Helper ──────────────────────────────────────────────────────────────
 
@@ -18,7 +19,7 @@ function escapeHtml(str: string): string {
 // ─── Rate limiters ────────────────────────────────────────────────────────────
 
 const exportRateLimit = RateLimiterFactory.createCustomLimiter({
-  windowMs: 60 * 60 * 1000, // 1 hour
+  windowMs: 60 * 60 * 1000,
   max: 1,
   message: { error: 'Export rate limit exceeded. Try again in 1 hour.' },
   keyGenerator: (req: any) => req.user?.id || req.ip,
@@ -96,6 +97,27 @@ router.get('/export', authenticate, exportRateLimit, async (req: AuthenticatedRe
   archive.append(JSON.stringify(data.teams, null, 2), { name: 'teams.json' });
   archive.append(JSON.stringify(data.blockchainLogs, null, 2), { name: 'blockchain_logs.json' });
 
+  const readme = [
+    'Syncro — Personal Data Export',
+    '==============================',
+    `Generated: ${new Date().toISOString()}`,
+    `User ID: ${userId}`,
+    '',
+    'Files included:',
+    '  profile.json        — Your account profile',
+    '  subscriptions.json  — All subscription records',
+    '  notifications.json  — Notification history',
+    '  audit_logs.json     — Account activity log',
+    '  preferences.json    — User preferences and email settings',
+    '  email_accounts.json — Connected email accounts',
+    '  teams.json          — Team membership records',
+    '  blockchain_logs.json — On-chain contract events and renewal approvals',
+    '',
+    'For questions or deletion requests, contact support.',
+  ].join('\n');
+
+  archive.append(readme, { name: 'README.txt' });
+
   await archive.finalize();
 
   await supabase.from('audit_logs').insert({
@@ -105,6 +127,8 @@ router.get('/export', authenticate, exportRateLimit, async (req: AuthenticatedRe
     resource_id: userId,
     metadata: { exported_at: new Date().toISOString() },
   });
+
+  logger.info(`Data export completed for user ${userId}`);
 });
 
 // ─── Account Deletion ─────────────────────────────────────────────────────────

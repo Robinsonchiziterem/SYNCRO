@@ -1,0 +1,741 @@
+﻿
+> synchro@1.0.0 test
+> jest
+
+  console.log
+    SUPABASE FROM (mocked) [Function: mockConstructor] {
+      _isMockFunction: true,
+      getMockImplementation: [Function (anonymous)],
+      mock: [Getter/Setter],
+      mockClear: [Function (anonymous)],
+      mockReset: [Function (anonymous)],
+      mockRestore: [Function (anonymous)],
+      mockReturnValueOnce: [Function (anonymous)],
+      mockResolvedValueOnce: [Function (anonymous)],
+      mockRejectedValueOnce: [Function (anonymous)],
+      mockReturnValue: [Function (anonymous)],
+      mockResolvedValue: [Function (anonymous)],
+      mockRejectedValue: [Function (anonymous)],
+      mockImplementationOnce: [Function (anonymous)],
+      withImplementation: [Function: bound withImplementation],
+      mockImplementation: [Function (anonymous)],
+      mockReturnThis: [Function (anonymous)],
+      mockName: [Function (anonymous)],
+      getMockName: [Function (anonymous)],
+      Symbol(Symbol.dispose): [Function (anonymous)]
+    }
+
+      at Object.<anonymous> (tests/api-keys-api.test.ts:78:13)
+
+  console.log
+    FROM MOCK CALLED for table api_keys
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:6:11)
+
+  console.log
+    FROM MOCK RETURNING {
+      select: [Function: select],
+      update: [Function: update],
+      insert: [Function: insert]
+    }
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:42:11)
+
+  console.log
+    CREATE KEY RESPONSE 201 {
+      success: true,
+      key: 'sk_956ffe6126bb60e86dcaea2c713415df7b9be6d010e9a6b835fe2ab26306f686',
+      scopes: [ 'subscriptions:read', 'subscriptions:write' ]
+    }
+
+      at Object.<anonymous> (tests/api-keys-api.test.ts:103:13)
+
+  console.log
+    from calls [ [ 'api_keys' ] ]
+
+      at Object.<anonymous> (tests/api-keys-api.test.ts:104:13)
+
+  console.log
+    SUPABASE FROM (mocked) [Function: mockConstructor] {
+      _isMockFunction: true,
+      getMockImplementation: [Function (anonymous)],
+      mock: [Getter/Setter],
+      mockClear: [Function (anonymous)],
+      mockReset: [Function (anonymous)],
+      mockRestore: [Function (anonymous)],
+      mockReturnValueOnce: [Function (anonymous)],
+      mockResolvedValueOnce: [Function (anonymous)],
+      mockRejectedValueOnce: [Function (anonymous)],
+      mockReturnValue: [Function (anonymous)],
+      mockResolvedValue: [Function (anonymous)],
+      mockRejectedValue: [Function (anonymous)],
+      mockImplementationOnce: [Function (anonymous)],
+      withImplementation: [Function: bound withImplementation],
+      mockImplementation: [Function (anonymous)],
+      mockReturnThis: [Function (anonymous)],
+      mockName: [Function (anonymous)],
+      getMockName: [Function (anonymous)],
+      Symbol(Symbol.dispose): [Function (anonymous)]
+    }
+
+      at Object.<anonymous> (tests/api-keys-api.test.ts:78:13)
+
+  console.log
+    FROM MOCK CALLED for table api_keys
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:6:11)
+
+  console.log
+    FROM MOCK RETURNING {
+      select: [Function: select],
+      update: [Function: update],
+      insert: [Function: insert]
+    }
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:42:11)
+
+  console.log
+    SUPABASE FROM (mocked) [Function: mockConstructor] {
+      _isMockFunction: true,
+      getMockImplementation: [Function (anonymous)],
+      mock: [Getter/Setter],
+      mockClear: [Function (anonymous)],
+      mockReset: [Function (anonymous)],
+      mockRestore: [Function (anonymous)],
+      mockReturnValueOnce: [Function (anonymous)],
+      mockResolvedValueOnce: [Function (anonymous)],
+      mockRejectedValueOnce: [Function (anonymous)],
+      mockReturnValue: [Function (anonymous)],
+      mockResolvedValue: [Function (anonymous)],
+      mockRejectedValue: [Function (anonymous)],
+      mockImplementationOnce: [Function (anonymous)],
+      withImplementation: [Function: bound withImplementation],
+      mockImplementation: [Function (anonymous)],
+      mockReturnThis: [Function (anonymous)],
+      mockName: [Function (anonymous)],
+      getMockName: [Function (anonymous)],
+      Symbol(Symbol.dispose): [Function (anonymous)]
+    }
+
+      at Object.<anonymous> (tests/api-keys-api.test.ts:78:13)
+
+  console.log
+    FROM MOCK CALLED for table api_keys
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:6:11)
+
+  console.log
+    FROM MOCK RETURNING {
+      select: [Function: select],
+      update: [Function: update],
+      insert: [Function: insert]
+    }
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:42:11)
+
+  console.log
+    SUPABASE FROM (mocked) [Function: mockConstructor] {
+      _isMockFunction: true,
+      getMockImplementation: [Function (anonymous)],
+      mock: [Getter/Setter],
+      mockClear: [Function (anonymous)],
+      mockReset: [Function (anonymous)],
+      mockRestore: [Function (anonymous)],
+      mockReturnValueOnce: [Function (anonymous)],
+      mockResolvedValueOnce: [Function (anonymous)],
+      mockRejectedValueOnce: [Function (anonymous)],
+      mockReturnValue: [Function (anonymous)],
+      mockResolvedValue: [Function (anonymous)],
+      mockRejectedValue: [Function (anonymous)],
+      mockImplementationOnce: [Function (anonymous)],
+      withImplementation: [Function: bound withImplementation],
+      mockImplementation: [Function (anonymous)],
+      mockReturnThis: [Function (anonymous)],
+      mockName: [Function (anonymous)],
+      getMockName: [Function (anonymous)],
+      Symbol(Symbol.dispose): [Function (anonymous)]
+    }
+
+      at Object.<anonymous> (tests/api-keys-api.test.ts:78:13)
+
+  console.log
+    FROM MOCK CALLED for table api_keys
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:6:11)
+
+  console.log
+    FROM MOCK RETURNING {
+      select: [Function: select],
+      update: [Function: update],
+      insert: [Function: insert]
+    }
+
+      at Object.fromImplementation (tests/api-keys-api.test.ts:42:11)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:85:21)
+        at createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:187:65)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:48:73)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 83 |[39m [90m   */[39m
+     [90m 84 |[39m   [36mstatic[39m createTeamInviteLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 85 |[39m     [36mreturn[39m rateLimit({
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 86 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mwindowMs[33m,[39m
+     [90m 87 |[39m       max[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmax[33m,[39m
+     [90m 88 |[39m       message[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:85:21)
+      at createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:187:65)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:48:73)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:85:21)
+        at createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:187:65)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:48:73)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 83 |[39m [90m   */[39m
+     [90m 84 |[39m   [36mstatic[39m createTeamInviteLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 85 |[39m     [36mreturn[39m rateLimit({
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 86 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mwindowMs[33m,[39m
+     [90m 87 |[39m       max[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmax[33m,[39m
+     [90m 88 |[39m       message[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:85:21)
+      at createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:187:65)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:48:73)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:85:21)
+        at createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:187:65)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:48:73)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 83 |[39m [90m   */[39m
+     [90m 84 |[39m   [36mstatic[39m createTeamInviteLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 85 |[39m     [36mreturn[39m rateLimit({
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 86 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mwindowMs[33m,[39m
+     [90m 87 |[39m       max[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmax[33m,[39m
+     [90m 88 |[39m       message[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:85:21)
+      at createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:187:65)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:48:73)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:110:21)
+        at createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:188:58)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:101:82)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 108 |[39m [90m   */[39m
+     [90m 109 |[39m   [36mstatic[39m createMfaLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 110 |[39m     [36mreturn[39m rateLimit({
+     [90m     |[39m                     [31m[1m^[22m[39m
+     [90m 111 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mwindowMs[33m,[39m
+     [90m 112 |[39m       max[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmax[33m,[39m
+     [90m 113 |[39m       message[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createMfaLimiter (src/middleware/rate-limit-factory.ts:110:21)
+      at createMfaLimiter (src/middleware/rate-limit-factory.ts:188:58)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:101:82)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:110:21)
+        at createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:188:58)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:105:80)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 108 |[39m [90m   */[39m
+     [90m 109 |[39m   [36mstatic[39m createMfaLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 110 |[39m     [36mreturn[39m rateLimit({
+     [90m     |[39m                     [31m[1m^[22m[39m
+     [90m 111 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mwindowMs[33m,[39m
+     [90m 112 |[39m       max[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmax[33m,[39m
+     [90m 113 |[39m       message[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createMfaLimiter (src/middleware/rate-limit-factory.ts:110:21)
+      at createMfaLimiter (src/middleware/rate-limit-factory.ts:188:58)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:105:80)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:110:21)
+        at createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:188:58)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:101:82)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at runNextTicks (node:internal/process/task_queues:65:5)
+        at processTimers (node:internal/timers:538:9)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 108 |[39m [90m   */[39m
+     [90m 109 |[39m   [36mstatic[39m createMfaLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 110 |[39m     [36mreturn[39m rateLimit({
+     [90m     |[39m                     [31m[1m^[22m[39m
+     [90m 111 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mwindowMs[33m,[39m
+     [90m 112 |[39m       max[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmax[33m,[39m
+     [90m 113 |[39m       message[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createMfaLimiter (src/middleware/rate-limit-factory.ts:110:21)
+      at createMfaLimiter (src/middleware/rate-limit-factory.ts:188:58)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:101:82)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:110:21)
+        at createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:188:58)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:105:80)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at runNextTicks (node:internal/process/task_queues:65:5)
+        at processTimers (node:internal/timers:538:9)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 108 |[39m [90m   */[39m
+     [90m 109 |[39m   [36mstatic[39m createMfaLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 110 |[39m     [36mreturn[39m rateLimit({
+     [90m     |[39m                     [31m[1m^[22m[39m
+     [90m 111 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mwindowMs[33m,[39m
+     [90m 112 |[39m       max[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmax[33m,[39m
+     [90m 113 |[39m       message[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createMfaLimiter (src/middleware/rate-limit-factory.ts:110:21)
+      at createMfaLimiter (src/middleware/rate-limit-factory.ts:188:58)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:105:80)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:110:21)
+        at createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:188:58)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:101:82)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 108 |[39m [90m   */[39m
+     [90m 109 |[39m   [36mstatic[39m createMfaLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 110 |[39m     [36mreturn[39m rateLimit({
+     [90m     |[39m                     [31m[1m^[22m[39m
+     [90m 111 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mwindowMs[33m,[39m
+     [90m 112 |[39m       max[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmax[33m,[39m
+     [90m 113 |[39m       message[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createMfaLimiter (src/middleware/rate-limit-factory.ts:110:21)
+      at createMfaLimiter (src/middleware/rate-limit-factory.ts:188:58)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:101:82)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:110:21)
+        at createMfaLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:188:58)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:105:80)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 108 |[39m [90m   */[39m
+     [90m 109 |[39m   [36mstatic[39m createMfaLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 110 |[39m     [36mreturn[39m rateLimit({
+     [90m     |[39m                     [31m[1m^[22m[39m
+     [90m 111 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mwindowMs[33m,[39m
+     [90m 112 |[39m       max[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmax[33m,[39m
+     [90m 113 |[39m       message[33m:[39m rateLimitConfig[33m.[39mmfa[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createMfaLimiter (src/middleware/rate-limit-factory.ts:110:21)
+      at createMfaLimiter (src/middleware/rate-limit-factory.ts:188:58)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:105:80)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:85:21)
+        at createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:187:65)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:222:79)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 83 |[39m [90m   */[39m
+     [90m 84 |[39m   [36mstatic[39m createTeamInviteLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 85 |[39m     [36mreturn[39m rateLimit({
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 86 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mwindowMs[33m,[39m
+     [90m 87 |[39m       max[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmax[33m,[39m
+     [90m 88 |[39m       message[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:85:21)
+      at createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:187:65)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:222:79)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:85:21)
+        at createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:187:65)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:244:77)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 83 |[39m [90m   */[39m
+     [90m 84 |[39m   [36mstatic[39m createTeamInviteLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 85 |[39m     [36mreturn[39m rateLimit({
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 86 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mwindowMs[33m,[39m
+     [90m 87 |[39m       max[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmax[33m,[39m
+     [90m 88 |[39m       message[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:85:21)
+      at createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:187:65)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:244:77)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:85:21)
+        at createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:187:65)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:244:77)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusHook (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:976:40)
+        at processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:941:5)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 83 |[39m [90m   */[39m
+     [90m 84 |[39m   [36mstatic[39m createTeamInviteLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 85 |[39m     [36mreturn[39m rateLimit({
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 86 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mwindowMs[33m,[39m
+     [90m 87 |[39m       max[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmax[33m,[39m
+     [90m 88 |[39m       message[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:85:21)
+      at createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:187:65)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:244:77)
+
+  console.error
+    ValidationError: Custom keyGenerator appears to use request IP without calling the ipKeyGenerator helper function for IPv6 addresses. This could allow IPv6 users to bypass limits. See https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/ for more information.
+        at Object.keyGeneratorIpFallback (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:642:13)
+        at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:685:22)
+        at parseOptions (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:755:16)
+        at rateLimit (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\express-rate-limit\dist\index.cjs:836:18)
+        at RateLimiterFactory.createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:85:21)
+        at createTeamInviteLimiter (C:\Users\hp\Downloads\SYNCRO\backend\src\middleware\rate-limit-factory.ts:187:65)
+        at Object.<anonymous> (C:\Users\hp\Downloads\SYNCRO\backend\tests\rate-limiting-integration.test.ts:304:79)
+        at Promise.finally.completed (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1557:28)
+        at new Promise (<anonymous>)
+        at callAsyncCircusFn (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1497:10)
+        at _callCircusTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1007:40)
+        at processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at _runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:947:3)
+        at C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:849:7
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:862:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at _runTestsForDescribeBlock (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:857:11)
+        at run (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:761:3)
+        at runAndTransformResultsToJestFormat (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\jestAdapterInit.js:1918:21)
+        at jestAdapter (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-circus\build\runner.js:101:19)
+        at runTestInternal (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:275:16)
+        at runTest (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:343:7)
+        at Object.worker (C:\Users\hp\Downloads\SYNCRO\backend\node_modules\jest-runner\build\testWorker.js:497:12) {
+      code: 'ERR_ERL_KEY_GEN_IPV6',
+      help: 'https://express-rate-limit.github.io/ERR_ERL_KEY_GEN_IPV6/'
+    }
+
+    [0m [90m 83 |[39m [90m   */[39m
+     [90m 84 |[39m   [36mstatic[39m createTeamInviteLimiter()[33m:[39m [33mRateLimitRequestHandler[39m {
+    [31m[1m>[22m[39m[90m 85 |[39m     [36mreturn[39m rateLimit({
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 86 |[39m       windowMs[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mwindowMs[33m,[39m
+     [90m 87 |[39m       max[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmax[33m,[39m
+     [90m 88 |[39m       message[33m:[39m rateLimitConfig[33m.[39mteamInvite[33m.[39mmessage[33m,[39m[0m
+
+      at Object.wrappedValidations.<computed> [as keyGeneratorIpFallback] (node_modules/express-rate-limit/dist/index.cjs:691:24)
+      at parseOptions (node_modules/express-rate-limit/dist/index.cjs:755:16)
+      at rateLimit (node_modules/express-rate-limit/dist/index.cjs:836:18)
+      at RateLimiterFactory.createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:85:21)
+      at createTeamInviteLimiter (src/middleware/rate-limit-factory.ts:187:65)
+      at Object.<anonymous> (tests/rate-limiting-integration.test.ts:304:79)
+
